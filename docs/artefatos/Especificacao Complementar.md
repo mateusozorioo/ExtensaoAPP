@@ -1,12 +1,12 @@
-# <Nome da Empresa>
+# <NPI UNIFIL>
 
-## <Nome do Projeto>
+## <EXTENSÃO APP>
 
 **Versão:** `<1.0>`
 
 # Especificação Complementar
 
-**Data:** `<dd/mmm/aa>`
+**Data:** `<28/02/2025>`
 
 <identificador do documento>
 
@@ -16,7 +16,7 @@
 
 | Data | Versão | Descrição | Autor |
 |------|--------|-----------|--------|
-| `<dd/mmm/aa>` | `<x.x>` | `<detalhes>` | `<nome>` |
+| `<28/02/2025>` | `<x.x>` | `<detalhes>` | `<Mateus Kreling Ozorio>` |
 
 ---
 
@@ -32,14 +32,20 @@
    2.1 [`<Requisito Funcional Um>`](#requisito-funcional-um)  
 3. [Utilidade](#utilidade)  
    3.1 [`<Requisito de Utilidade Um>`](#requisito-de-utilidade-um)
-   3.1 [`<Requisito de Utilidade Um>`](#requisito-de-utilidade-um)  
-5. [Confiabilidade](#confiabilidade)  
-   4.1 [`<Requisito de Confiabilidade Um>`](#requisito-de-confiabilidade-um)  
-6. [Desempenho](#desempenho)  
+   3.2 [`<Requisito de Utilidade Dois>`](#requisito-de-utilidade-dois)
+   3.3 [`<Requisito de Utilidade Tres>`](#requisito-de-utilidade-tres)
+4. [Confiabilidade](#confiabilidade)
+   4.1 [`<Requisito de Confiabilidade Um>`](#requisito-de-confiabilidade-um)
+   4.2 [`<Requisito de Confiabilidade Dois>`](#requisito-de-confiabilidade-dois)
+   4.3 [`<Requisito de Confiabilidade Tres>`](#requisito-de-confiabilidade-tres)
+   4.4 [`<Requisito de Confiabilidade Quatro>`](#requisito-de-confiabilidade-quatro)  
+5. [Desempenho](#desempenho)  
    5.1 [`<Requisito de Desempenho Um>`](#requisito-de-desempenho-um)  
-7. [Suportabilidade](#suportabilidade)  
-   6.1 [`<Requisito de Suportabilidade Um>`](#requisito-de-suportabilidade-um)  
-8. [Restrições de Design](#restrições-de-design)  
+6. [Suportabilidade](#suportabilidade)  
+   6.1 [`<Requisito de Suportabilidade Um>`](#requisito-de-suportabilidade-um)
+   6.2 [`<Requisito de Suportabilidade Dois>`](#requisito-de-suportabilidade-dois)
+   6.3 [`<Requisito de Suportabilidade Tres>`](#requisito-de-suportabilidade-tres) 
+7. [Restrições de Design](#restrições-de-design)
    7.1 [`<Restrição de Design Um>`](#restrição-de-design-um)  
 9. [Documentação do Usuário On-line e Requisitos do Sistema de Ajuda](#documentação-do-usuário-on-line-e-requisitos-do-sistema-de-ajuda)  
 10. [Componentes Comprados](#componentes-comprados)  
