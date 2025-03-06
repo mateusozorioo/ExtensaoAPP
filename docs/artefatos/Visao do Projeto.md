@@ -1,36 +1,32 @@
-# <Project Name>
+# EXTENSÃO APP
 
 ## Vision
 
-**Data:** `<dd/mmm/aa>`
+**Data:** `<06/03/2025>`
 
-## <Nome do Projeto>
+## EXTENSÃO APP
 
 # Visão
-
-> **Nota de Uso:** Há uma orientação no procedimento dentro desse gabarito.
 
 ---
 
 ## Introdução
-
+  Este documento apresenta a Visão Informal do sistema de automação para verificação e anulação da matéria de Projeto Interdisciplinar (PI) com base na participação dos alunos em Hackathons. O sistema permitirá cadastros de alunos e professores, inscrições, validação de participação, soma de participações, controle de pontuação e um sistema de QR Code para visualização de perfis.
 ### Posicionamento
 
 #### Instrução do Problema
 
-Forneça uma instrução que resume o problema sendo resolvido por esse projeto. Pode ser utilizado o seguinte formato:
-
 - **O problema de**  
-  `[descreva o problema]`
+  Atestar a participação e validação dos alunos em Hackathons para que possam anular a matéria Projeto Interdisciplinar (PI), atualmente realizado de forma manual e burocrática.
 
 - **Afeta**  
-  `[os interessados afetados pelo problema]`
+  Os alunos, professores e administração acadêmica que necessitam de um processo mais ágil e eficiente.
 
 - **O impacto do qual é**  
-  `[qual é o impacto do problema?]`
+  Demora na validação da anulação da matéria, riscos de erro no processo manual e falta de transparência na gestão das participações.
 
 - **Uma solução bem-sucedida seria**  
-  `[liste alguns dos principais benefícios de uma solução bem-sucedida]`
+  Um sistema automatizado que permita o registro, validação e acompanhamento dos alunos e seus respectivos Hackathons, garantindo mais agilidade, segurança e transparência.
 
 #### Instrução sobre a Posição do Produto
 
