@@ -118,4 +118,4 @@ Defina as **faixas de qualidade** para:
 
 ## Confidencial
 
-© `<Company Name>`, 2006
+© NPI-UniFil, 2025
