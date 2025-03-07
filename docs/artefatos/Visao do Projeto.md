@@ -2,7 +2,7 @@
 
 ## Vision
 
-**Data:** `<06/03/2025>`
+**Data:** `06/03/2025`
 
 ## EXTENSÃO APP
 
@@ -30,27 +30,23 @@
 
 #### Instrução sobre a Posição do Produto
 
-Forneça uma instrução geral que resuma, no nível mais alto, a posição exclusiva que o produto pretende ocupar no mercado. Pode ser utilizado o seguinte formato:
-
 - **Para**  
-  `[cliente alvo]`
+  Alunos e professores universitários, assim como coordenadores e gestores de curso
 
 - **Que**  
-  `[instrução da necessidade ou da oportunidade]`
+  Precisam de um meio eficiente e confiável para registrar, validar e acompanhar a participação dos alunos em Hackathons
 
 - **O (nome do produto)**  
-  `é uma [categoria do produto]`
+  EXTENSÃO APP é um sistema web integrado
 
 - **Que**  
-  `[instrução do principal benefício; ou seja, a razão influente para compra]`
+  Facilita e acelera o processo de verificação e anulação da matéria PI.
 
 - **A menos que**  
-  `[alternativa competitiva principal]`
+  Utilizem o método tradicional manual, sujeito a erros e demoras.
 
 - **Nosso produto**  
-  `[instrução da diferenciação principal]`
-
-> **Nota:** Uma instrução de posição do produto comunica o propósito do aplicativo e a importância do projeto à toda a equipe interessada.
+  Oferece uma interface intuitiva, segura e automatizada para cadastros, registros e validações, reduzindo a carga burocrática para alunos e professores
 
 ---
 
@@ -60,27 +56,17 @@ Forneça uma instrução geral que resuma, no nível mais alto, a posição excl
 
 | Nome  | Descrição | Responsabilidades |
 |-------|-----------|------------------|
-| `[Nomeie o tipo de envolvido]` | `[Descreva resumidamente o envolvido]` | `[Resuma as responsabilidades principais do envolvido em relação ao sistema sendo desenvolvido]` |
-
-> Exemplo de responsabilidades:  
-> - Assegura que o sistema será passível de manutenção  
-> - Assegura que haverá uma demanda de mercado para os recursos do produto  
-> - Monitora o progresso do projeto  
-> - Aprova o financiamento  
-
----
+| Aluno | Usuário final que participa dos Hackathons e busca anular a matéria PI. | Realizar cadastro, inscrever-se em Hackathons, submeter evidências de participação e solicitar exclusão de matéria. |
+| Professor | Responsável por validar a participação dos alunos em Hackathons e verificar aqueles que não irão fazer sua matéria. | Avaliar as inscrições, as participações e validar os alunos que anularam sua matéria de PI. |
+| Administração Acadêmica | Gerencia o sistema e acompanha os processos. | Garantir a correta implementação das regras e relatórios acadêmicos. |
 
 ## Ambiente do Usuário
 
 Detalhe o ambiente de trabalho do usuário alvo. Algumas sugestões:
 
-- Número de pessoas envolvidas na conclusão da tarefa? Isso está mudando?
-- Quanto tempo dura um ciclo de tarefas? Período de tempo gasto em cada atividade? Isso está mudando?
-- Há quaisquer restrições ambientais exclusivas: móveis, externas, inflight e assim por diante?
-- Quais plataformas do sistema estão em uso atualmente? Futuras plataformas?
-- Quais outros aplicativos estão em uso? O seu aplicativo precisa se integrar a eles?
-
-> Aqui poderiam ser incluídos extratos do **Modelo de Negócios** para descrever a tarefa e as funções envolvidas.
+- O sistema será acessado por alunos, professores e administradores acadêmicos via web.
+- O acesso poderá ser feito por desktop e dispositivos móveis.
+- A integração com QR Code permitirá uma verificação rápida dos perfis dos alunos.
 
 ---
 
@@ -88,43 +74,32 @@ Detalhe o ambiente de trabalho do usuário alvo. Algumas sugestões:
 
 ### Perspectiva do Produto
 
-Essa subseção do documento de Visão coloca o produto na perspectiva de outros produtos relacionados e no ambiente do usuário.
-
-Se o produto for independente e totalmente autônomo, indique-o aqui. Se o produto for um **componente de um sistema maior**, relacione como esses sistemas interagem e identifique as interfaces relevantes entre os sistemas.
-
-> Uma maneira fácil de exibir os principais componentes do sistema maior, as interconexões e as interfaces externas é com um **diagrama de bloco**.
+O sistema será uma plataforma web independente, com possibilidade de integração futura com sistemas acadêmicos existentes da universidade.
 
 ### Premissas e Dependências
 
-Liste cada fator que afeta os recursos indicados no documento de Visão. Liste as premissas que, se modificadas, alterarão o documento.
+- O sistema necessitará de conexão com a base de dados da universidade para autenticação de alunos e professores.
 
-Exemplo de premissa:  
-- Um sistema operacional específico estará disponível para o hardware designado para o produto de software.  
-- Se o sistema operacional não estiver disponível, o documento de Visão precisará ser alterado.
+- QR Codes devem ser gerados e acessíveis em dispositivos móveis.
 
 ---
 
 ## Necessidades e Recursos
 
-> **Evite o design.** Mantenha as descrições no nível geral. Concentre-se nos recursos necessários e no **porquê** (não em **como**) eles devem ser implementados.
-
 | Necessidade | Prioridade | Recursos | Liberação Planejada |
 |------------|-----------|---------|-------------------|
-| `[Necessidade]` | `[Alta/Média/Baixa]` | `[Recurso necessário]` | `[Data estimada]` |
+| Cadastro de Alunos e Professores | Alta | Banco de Dados, Interface Web | Segundo semestre |
+| Inscrições em Hackathons | Alta | Formulário interativo | Segundo semestre |
+| Verificação da anulação dos alunos de PI | Alta | Planilhas, Interface Web | Segundo semestre |
+| Integração com QR Code | Média | Gerador e leitor de QR Code | Segundo semestre |
 
 ---
 
 ## Alternativas e Competição
 
-Identifique as alternativas das percepções do interessado, conforme disponíveis.  
-Elas podem incluir:
-
-- Compra de um produto do concorrente
-- Compra de uma solução desenvolvida internamente
-- Manutenção do **status quo**
-
-Liste todas as opções competitivas conhecidas ou que possam surgir.  
-Inclua as principais **forças** e **fraquezas** de cada concorrente, conforme percebido pelo envolvido ou usuário final.
+- Manutenção do método manual atual, que é lento e propenso a erros.
+- Desenvolvimento de uma solução interna dentro do portal acadêmico, exigindo recursos adicionais.
+- Uso de softwares externos para registro de eventos e participações, sem personalização para a necessidade acadêmica.
 
 ---
 
@@ -134,24 +109,10 @@ Inclua as principais **forças** e **fraquezas** de cada concorrente, conforme p
 
 Defina as **faixas de qualidade** para:
 
-- Desempenho
-- Robustez
-- Tolerância a falhas
-- Usabilidade
-- Características não capturadas no Conjunto de Recursos
-
-Anote quaisquer **restrições externas ou dependências**, como:
-
-- Restrições de design
-- Documentação necessária (manuais, ajuda online, instalação, etc.)
-- Embalagem e identificação
-
-Defina **prioridade** desses requisitos e atributos como:
-
-- **Estabilidade**
-- **Benefício**
-- **Esforço**
-- **Risco**
+- O sistema deverá seguir padrões de acessibilidade e usabilidade. **Estabilidade**
+- Deverá suportar múltiplos dispositivos (desktop e móveis). **Suportabilidade**
+- O desempenho deverá garantir um tempo de resposta adequado. **Estabilidade**
+- Deverá garantir a segurança e privacidade dos dados dos alunos e professores. **Segurança**
 
 ---
 
