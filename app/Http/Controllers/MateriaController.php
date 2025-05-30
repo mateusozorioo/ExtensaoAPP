@@ -87,6 +87,6 @@ class MateriaController extends Controller
         $materia->delete();
 
         //Redireciona com uma mensagem de sucesso
-        return redirect()->route('materia.index')->with('sucess', 'Matéria excluída com sucesso!');
+        return redirect()->route('materia.index')->with('success', 'Matéria excluída com sucesso!');
     }
 }

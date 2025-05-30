@@ -21,3 +21,7 @@ Route::get('/materia/editar/{id}', [MateriaController::class, 'edit'])->name('ma
 Route::put('/materias/{id}', [MateriaController::class, 'update'])->name('materia.update');
 
 Route::delete('/materias/{id}', [MateriaController::class, 'destroy'])->name('materia.destroy');
+
+Route::get('/professor', function () {
+    return view('professor.index');
+})->name('professor.home');
