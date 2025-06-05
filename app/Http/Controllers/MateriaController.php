@@ -32,7 +32,7 @@ class MateriaController extends Controller
         // Validação simples dos campos do formulário
         $request->validate([
             'nome_materia' => 'required|string|max:255',
-            'bimestre_cubo' => 'required|string|max:100',
+            'bimestre_cubo' => 'required|string|max:2',
         ]);
 
         // Criação do novo registro do banco usando o Eloquent (geração do SQL)

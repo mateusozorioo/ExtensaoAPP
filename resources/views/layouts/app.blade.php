@@ -21,12 +21,12 @@
 
     {{-- CONTEÚDO PRINCIPAL --}}
     <!--Faz o conteúdo principal crescer e ocupar o espaço disponível-->
-    <main class="flex-grow-1 container mt-2">
+    <main class="flex-grow-1">
         @yield('content')
     </main>
 
     <!--Faz o conteúdo principal crescer e ocupar o espaço disponívels-->
-    <footer class="d-flex justify-content-between align-items-center px-3 py-2 mt-auto"
+    <footer class="d-flex justify-content-between align-items-center px-3 py-1 mt-auto"
         style="background-color: #d46d00;">
         @include('includes.footer')
     </footer>

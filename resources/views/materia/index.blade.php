@@ -4,13 +4,13 @@
 
 @section('content')
 
-<div class="container mt-3 mb-4">
-    <div class="row">
-        <h1 class="h3 text-center text-white bg-gradient p-3 rounded"
-            style="background: linear-gradient(45deg, #ff6b35, #f7931e) !important;">GERENCIAR MATERIAS</h1>
-    </div>
-</div>
-<div class="container">
+@php
+$name = "GERENCIAR MATÉRIAS";
+@endphp
+
+
+
+<div class="container mt-2 mb-4">
     <div class="justify-content-between align-items-center mb-4">
         <div class="row justify-content-end">
             <h2 class="col-8 h3 text-center">Lista de Matérias</h2>
@@ -96,8 +96,8 @@
             </table>
         </div>
     </div>
-
 </div>
+
 
 <!-- Bootstrap JS (opcional, caso queira usar interações no futuro) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

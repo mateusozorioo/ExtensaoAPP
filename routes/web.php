@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HackathonsDisponiveisController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MateriaController;
 
@@ -25,3 +26,6 @@ Route::delete('/materias/{id}', [MateriaController::class, 'destroy'])->name('ma
 Route::get('/professor', function () {
     return view('professor.index');
 })->name('professor.home');
+
+// A 'Route::resource equivale a escrever todas as rotas de um CRUD manualmente (como eu escrevi acima):
+Route::resource('hackathons-disponiveis', HackathonsDisponiveisController::class);
