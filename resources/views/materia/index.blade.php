@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Página Inicial')
+@section('title', 'Gerenciar Matérias')
 
 @section('content')
 
 @php
 $name = "GERENCIAR MATÉRIAS";
 @endphp
-
 
 
 <div class="container mt-2 mb-4">
@@ -67,19 +66,19 @@ $name = "GERENCIAR MATÉRIAS";
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Fechar"></button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body text-center">
                                             Tem certeza que deseja excluir a matéria
                                             <strong>{{ $materia->nome_materia }}</strong> permanentemente?
                                         </div>
-                                        <div class="modal-footer">
+                                        <div class="modal-footer justify-content-center">
                                             <form action="{{ route('materia.destroy', $materia->materia_id) }}"
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Sim</button>
                                                 <!-- data-bs-dismiss="modal": fecha o modal ao clicar -->
                                                 <button type="button" class="btn btn-dark"
                                                     data-bs-dismiss="modal">Não</button>
+                                                <button type="submit" class="btn btn-danger">Sim</button>
                                             </form>
                                         </div>
                                     </div>

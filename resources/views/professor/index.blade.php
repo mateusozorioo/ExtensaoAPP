@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Página Inicial')
+@section('title', 'Menu - Professor')
 
 @section('content')
 
@@ -21,12 +21,12 @@ $name = "MENU DO PROFESSOR";
                             <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-trophy"></i> -->
-                                <span>🏆</span>
+                                <img src="{{ asset('images/trophy.png') }}" width="40" class="img-fluid" alt="Icon-Trofeu">
                             </div>
                         </div>
                         <div>
                             <h5 class="card-title text-warning">HACKATHONS UNIFIL</h5>
-                            <p class="card-text">Verifique os Hackathons disponíveis para alunos</p>
+                            <p class="card-text">Verifique os Hackathons disponíveis para alunos.</p>
                         </div>
                     </div>
                 </div>
@@ -43,12 +43,12 @@ $name = "MENU DO PROFESSOR";
                             <div class="bg-info rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-calendar"></i> -->
-                                <span>📄</span>
+                                <img src="{{ asset('images/prancheta.png') }}" width="40" class="img-fluid" alt="Logo-Unifil">
                             </div>
                         </div>
                         <div>
                             <h5 class="card-title text-warning">GERENCIAR MATÉRIAS</h5>
-                            <p class="card-text">Gerencie todas as matérias</p>
+                            <p class="card-text">Gerencie todas as matérias.</p>
                         </div>
                     </div>
                 </div>
@@ -65,12 +65,12 @@ $name = "MENU DO PROFESSOR";
                             <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-people"></i> -->
-                                <span class="text-white">🎧</span>
+                                 <img src="{{ asset('images/graduation.png') }}" width="40" class="img-fluid" alt="Logo-Unifil">
                             </div>
                         </div>
                         <div>
                             <h5 class="card-title text-warning">GERENCIAR SEUS ALUNOS</h5>
-                            <p class="card-text">Verifique os alunos inscritos em suas matérias</p>
+                            <p class="card-text">Verifique os alunos inscritos em suas matérias.</p>
                         </div>
                     </div>
                 </div>
@@ -87,12 +87,12 @@ $name = "MENU DO PROFESSOR";
                             <div class="bg-info rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-check-circle"></i> -->
-                                <span class="text-white">✔️</span>
+                                 <img src="{{ asset('images/aceitar.png') }}" width="40" class="img-fluid" alt="Logo-Unifil">
                             </div>
                         </div>
                         <div>
-                            <h5 class="card-title text-warning">VALIDAR HACKATHONS</h5>
-                            <p class="card-text">Valide os Hackathons que seus alunos estão fazendo!</p>
+                            <h5 class="card-title text-warning">VALIDAR ANULAÇÃO DE MATÉRIA</h5>
+                            <p class="card-text">Valide as solicitações de anulação de matéria de seus alunos!</p>
                         </div>
                     </div>
                 </div>

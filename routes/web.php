@@ -29,3 +29,5 @@ Route::get('/professor', function () {
 
 // A 'Route::resource equivale a escrever todas as rotas de um CRUD manualmente (como eu escrevi acima):
 Route::resource('hackathons-disponiveis', HackathonsDisponiveisController::class);
+
+Route::get('/edicao', [HackathonsDisponiveisController::class, 'edicao'])->name('hackathons-disponiveis.edicao'); // Nova rota

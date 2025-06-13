@@ -1,35 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+    <!DOCTYPE html>
+    <html lang="pt-BR">
 
-<head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'Extensão APP')</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>@yield('title', 'Extensão APP')</title>
 
-    <!-- BOOTSTRAP CSS 5.3-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <!-- BOOTSTRAP CSS 5.3-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-</head>
+    </head>
 
-<body class="bg-light d-flex flex-column min-vh-100">
+    <body class="bg-light d-flex flex-column min-vh-100">
 
-    {{-- HEADER --}}
-    @include('includes.header')
+        {{-- HEADER --}}
+        @include('includes.header')
 
-    {{-- CONTEÚDO PRINCIPAL --}}
-    <!--Faz o conteúdo principal crescer e ocupar o espaço disponível-->
-    <main class="flex-grow-1">
-        @yield('content')
-    </main>
+        {{-- CONTEÚDO PRINCIPAL --}}
+        <!--Faz o conteúdo principal crescer e ocupar o espaço disponível-->
+        <main class="flex-grow-1">
+            @yield('content')
+        </main>
 
-    <!--Faz o conteúdo principal crescer e ocupar o espaço disponívels-->
-    <footer class="d-flex justify-content-between align-items-center px-3 py-1 mt-auto"
-        style="background-color: #d46d00;">
-        @include('includes.footer')
-    </footer>
-</body>
+        <!--Faz o conteúdo principal crescer e ocupar o espaço disponívels-->
+        <footer class="d-flex justify-content-between align-items-center px-3 py-1 mt-3"
+            style="background-color: #d46d00;">
+            @include('includes.footer')
+        </footer>
+    </body>
 
-</html>
+    </html>
