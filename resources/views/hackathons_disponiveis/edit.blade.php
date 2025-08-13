@@ -17,7 +17,7 @@ $hideMenuText = true;
                 <div class="card-header bg-warning text-dark">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">✏️ Editar Hackathon</h4>
-                        <a href="{{ route('hackathons-disponiveis.edicao') }}" class="btn btn-secondary btn-sm">← Voltar</a>
+                        <a href="{{ route('hackathons-disponiveis.index') }}" class="btn btn-secondary btn-sm">← Voltar</a>
                     </div>
                 </div>
                 
@@ -29,7 +29,7 @@ $hideMenuText = true;
                                 @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
-                            </ul>
+                            </ul>x
                         </div>
                     @endif
 
@@ -96,7 +96,7 @@ $hideMenuText = true;
 
                         <!-- Botões -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ route('hackathons-disponiveis.edicao') }}" 
+                            <a href="{{ route('hackathons-disponiveis.index') }}" 
                                class="btn btn-secondary me-md-2">
                                 Cancelar
                             </a>

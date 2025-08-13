@@ -9,43 +9,106 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-light">
+<!DOCTYPE html>
+<html lang="pt-br">
 
-    <div class="container mt-5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Matéria</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
 
-        <div class="text-center mb-4">
-            <h2 class="h4">Editar Matéria</h2>
+<body class="bg-secondary">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow bg-light border-light" style="width: 35rem;">
+            <div class="card-header text-dark bg-warning">
+                <h1 class="h5 mb-0 text-center"><i class="bi bi-pencil-square me-2"></i>Editar Matéria</h1>
+            </div>
+            <div class="card-body">
+                <!--Adiciona classe do Bootstrap para validação de formulário e desabilita a validação do navegador-->
+                <form action="{{ route('materia.update', $materia->materia_id) }}" method="POST" class="needs-validation" novalidate>
+                    <!--diretiva do Laravel que gera um token de segurança para proteger contra ataques CSRF (falsificação de requisição)-->
+                    @csrf
+                    @method('PUT')
+                    <!-- Necessário para usar método PUT -->
+                    
+                    <!-- Campo Nome da Matéria -->
+                    <div class="mb-3">
+                        <label for="nome_materia" class="form-label text-dark">Nome da Matéria</label>
+                        <!--o 'input-group' serve para agrupar o ícone com o input-->
+                        <div class="input-group">
+                            <!--input-group-text: estiliza o container do ícone-->
+                            <span class="input-group-text"><i class="bi bi-mortarboard-fill"></i></span>
+                            <!-- name="nome_materia": nome que será enviado para o servidor, id="nome_materia": identificador único -->
+                            <input type="text" name="nome_materia" id="nome_materia" class="form-control"
+                                placeholder="Ex: Projeto Interdisciplinar I" maxlength="255" value="{{ $materia->nome_materia }}" required>
+                            <div class="invalid-feedback">Por favor, informe o nome da matéria.</div>
+                        </div>
+                    </div>
+
+                    <!-- Campo Bimestre -->
+                    <div class="mb-4">
+                        <label for="bimestre_cubo" class="form-label text-dark">Bimestre (Cubo)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar2-week-fill"></i></span>
+                            <input type="text" class="form-control" name="bimestre_cubo" id="bimestre_cubo"
+                                placeholder="Ex: B1" maxlength="2" value="{{ $materia->bimestre_cubo }}" required>
+                            <div class="invalid-feedback">Por favor, informe o bimestre.</div>
+                        </div>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-warning text-dark" >
+                            <i class="bi bi-check-circle me-2"></i>Confirmar Alterações
+                        </button>
+                        <a href="{{ route('materia.index') }}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Voltar
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <!-- Formulário de edição -->
-        <form action="{{ route('materia.update', $materia->materia_id) }}" method="POST"
-            class="bg-white p-4 border rounded">
-            @csrf
-            @method('PUT')
-            <!-- Necessário para usar método PUT -->
-
-            <!-- Nome da matéria -->
-            <div class="mb-3">
-                <label for="nome_materia" class="form-label">Nome da Matéria</label>
-                <input type="text" name="nome_materia" class="form-control" value="{{ $materia->nome_materia }}"
-                    required>
-            </div>
-
-            <!-- Bimestre (Cubo) -->
-            <div class="mb-3">
-                <label for="bimestre_cubo" class="form-label">Bimestre (Cubo)</label>
-                <input type="text" name="bimestre_cubo" class="form-control" value="{{ $materia->bimestre_cubo }}"
-                    required>
-            </div>
-
-            <!-- Botão de confirmar alterações -->
-            <button type="submit" class="btn btn-success">✔️ Confirmar Alterações</button>
-            <a href="{{ route('materia.index') }}" class="btn btn-secondary">Voltar</a>
-        </form>
-
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Validação Bootstrap
+    // Os parênteses ao redor criam uma função anônima que executa imediatamente
+    // Isso evita poluir o escopo global com variáveis
+    (function() {
+        // Busca TODOS os formulários da página que tenham a classe 'needs-validation'
+        // querySelectorAll retorna uma NodeList (similar a um array) com todos os elementos encontrados
+        const forms = document.querySelectorAll('.needs-validation');
+        // Loop. Para cada formulário, executa a função que recebe o formulário como parâmetro
+        forms.forEach(form => {
+            // ADICIONA EVENTO DE SUBMISSÃO ('submit')
+            form.addEventListener('submit', event => {
+                // VERIFICAÇÃO DE VALIDADE
+                if (!form.checkValidity()) {
+                    // Se o formulário não é válido, impede que seja enviado
+                    event.preventDefault();
+                    // Impede que outros eventos de submit sejam executados
+                    event.stopPropagation();
+                }
+                // ADICIONA CLASSE DE VALIDAÇÃO
+                // 'was-validated' é uma classe do Bootstrap que:
+                // - Mostra as mensagens de erro (invalid-feedback)
+                // - Mostra bordas vermelhas nos campos inválidos
+                // - Mostra bordas verdes nos campos válidos
+                // Esta classe é adicionada independentemente da validação passar ou não
+                form.classList.add('was-validated');
+            }, false); // false = não captura o evento na fase de captura
+        });
+    })();
+    </script>
 </body>
+
+</html>
 
 </html>

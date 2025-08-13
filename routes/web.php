@@ -3,6 +3,8 @@
 use App\Http\Controllers\HackathonsDisponiveisController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MateriaController;
+use App\Http\Controllers\TurmasController;
+use App\Http\Controllers\SolicitacaoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,4 +32,16 @@ Route::get('/professor', function () {
 // A 'Route::resource equivale a escrever todas as rotas de um CRUD manualmente (como eu escrevi acima):
 Route::resource('hackathons-disponiveis', HackathonsDisponiveisController::class);
 
-Route::get('/edicao', [HackathonsDisponiveisController::class, 'edicao'])->name('hackathons-disponiveis.edicao'); // Nova rota
+Route::get('/aluno', [HackathonsDisponiveisController::class, 'aluno'])->name('hackathons-disponiveis.aluno'); // Nova rota
+
+Route::get('/turmas', [TurmasController::class, 'index'])->name('turmas.index');
+
+
+// Rotas para solicitações de alunos
+Route::prefix('alunos')->name('alunos.')->group(function () {
+    // Outras rotas de aluno...
+    
+    // Rotas para solicitações - AGORA VAI FUNCIONAR!
+    Route::get('/solicitacao', [SolicitacaoController::class, 'index'])->name('solicitacao.index');
+    Route::post('/solicitacao', [SolicitacaoController::class, 'store'])->name('solicitacao.store');
+});

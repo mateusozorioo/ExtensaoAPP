@@ -11,7 +11,7 @@ class MateriaController extends Controller
     public function index()
     {
         //Recupera todas as matérias do banco
-        $materias = Materia::all();
+        $materias = Materia::orderBy('materia_id', 'asc')->get();
 
         //Retorna a view passando os dados ($materias) para que a view possa usá-los
         return view('materia.index', compact('materias')); //= ('materia.index', ['materias' => $materias])

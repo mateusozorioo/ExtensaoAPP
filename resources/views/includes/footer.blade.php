@@ -49,3 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<!-- Bootstrap JavaScript para funcionalidades interativas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Coloque isso após o Bootstrap JS ser carregado
+    var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+</script>

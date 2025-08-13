@@ -57,7 +57,7 @@ $name = "MENU DO PROFESSOR";
 
         {{-- Card 3: Gerenciar seus alunos --}}
         <div class="col">
-            <a href="#" class="text-decoration-none">
+            <a href="{{ route ('turmas.index') }}" class="text-decoration-none">
                 <div class="card bg-secondary text-white h-100 shadow-lg">
                     <div class="card-body d-flex align-items-center py-5">
                         <div class="me-3">
@@ -79,7 +79,7 @@ $name = "MENU DO PROFESSOR";
 
         {{-- Card 4: Validar Hackathons --}}
         <div class="col">
-            <a href="#" class="text-decoration-none">
+            <a href="{{ route ('alunos.solicitacao.index') }}" class="text-decoration-none">
                 <div class="card bg-secondary text-white h-100 shadow-lg">
                     <div class="card-body d-flex align-items-center py-5">
                         <div class="me-3">

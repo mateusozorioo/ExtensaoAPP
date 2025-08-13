@@ -1,35 +1,36 @@
 @extends('layouts.app')
-@section('title', 'Hackathons Unifil')
-@section('content')
+
+@section('title', 'Edição Hackathons')
 
 @php
-$name = "HACKATHONS UNIFIL";
+$name = "EDIÇÃO HACKATHONS DISPONÍVEIS";
+$hideMenuText = false;
 @endphp
 
-
+@section('content')
 <div class="container mt-2 mb-4">
-    <div class="row justify-content-center mb-4">
-        <div class="col-lg-4">
-            <!-- Espaço vazio para simular o gap dos hackathons -->
-        </div>
-        <!-- Botão de edição de hackathons -->
-        <div class="col-lg-2 mb-2">
-            <a href="{{ route('hackathons-disponiveis.edicao') }}" class="btn btn-warning w-100">
-                ✏️ Editar Hackathons
-            </a>
-        </div>
-        <!-- Botão de adicionar hackathon -->
-        <div class="col-lg-2 mb-2">
-            <a href="{{ route('hackathons-disponiveis.create') }}" class="btn btn-success w-100">
+    <div class="row d-flex justify-content-center mb-2">
+        <div class="col-lg-3 mb-2">
+            <a href="{{ route('hackathons-disponiveis.create') }}" class="shadow btn btn-success w-100">
                 + Adicionar Hackathon
             </a>
         </div>
-        <div class="col-lg-4">
-            <!-- Espaço vazio para simular o gap dos hackathons -->
-        </div>
     </div>
-    <div class="row justify-content-center mb-2">
-        <h2 class="col-8 h3 text-center">Lista de Hackathons Disponíveis</h2>
+        <div class="row d-flex justify-content-between align-items-center mb-2">
+        <div class="col-1 mb-2">
+            <!--Espaço em branco-->
+        </div>
+        <!-- Botão de adicionar hackathon -->
+        <h2 class="col-lg-8 h3 text-center">Escolha o Hackathon que você deseja Editar/Excluir</h2> 
+        <div class="col-lg-1 mb-2">
+            <a href="{{ route('hackathons-disponiveis.aluno') }}" 
+            class="btn btn-info" 
+            data-bs-toggle="tooltip" 
+            data-bs-placement="top" 
+            data-bs-title="Visualizar tela do aluno">
+                👁️
+            </a>
+        </div>
     </div>
 
     <!-- Mensagens de sucesso/erro -->
@@ -47,35 +48,85 @@ $name = "HACKATHONS UNIFIL";
         </div>
     @endif
 
-    <!-- Lista de hackathons disponíveis -->
     <div class="row">
-        @foreach ($hackathons as $hackathon)
+        @forelse ($hackathons as $hackathon)
             <div class="col-md-6 mb-4">
-                <a href="{{ $hackathon->hackathon_link }}" target="_blank" class="text-decoration-none">
-                    <div class="card h-100 border-0 shadow bg-secondary" style="border-radius: 15px; overflow: hidden;">
-                        <img src="{{ asset($hackathon->hackathon_imagem) }}" 
-                             class="card-img-top" 
-                             alt="{{ $hackathon->hackathon_nome }}"
-                             style="height: 200px; object-fit: cover;">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-light mb-0">{{ strtoupper($hackathon->hackathon_nome) }}</h5>
+                <div class="card h-100 border-0 shadow position-relative" style="border-radius: 15px; overflow: hidden;">
+                    <!-- Imagem com altura fixa (200px) e object-fit: cover para não distorcer -->
+                    <img src="{{ asset($hackathon->hackathon_imagem) }}" 
+                         class="card-img-top" 
+                         alt="{{ $hackathon->hackathon_nome }}" 
+                         style="height: 200px; object-fit: cover;">
+                    
+                    <!-- Overlay que aparece no hover -->
+                    <div class="card-img-overlay d-flex align-items-center justify-content-center overlay-hover" 
+                         style="background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s ease;">
+                        
+                        <!-- Botão Editar -->
+                        <a href="{{ route('hackathons-disponiveis.edit', $hackathon->hackathons_disponiveis_id) }}" 
+                           class="btn btn-warning btn-lg me-3">
+                            ✏️
+                        </a>
+                        
+                        <!-- Botão Excluir -->
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal{{ $hackathon->hackathons_disponiveis_id }}">
+                            ❌
+                        </button>
+                    </div>
+                    
+                    <div class="card-body text-center bg-secondary">
+                        <h5 class="card-title text-light mb-0">{{ strtoupper($hackathon->hackathon_nome) }}</h5>
+                    </div>
+                </div>
+
+                <!-- Modal de confirmação de exclusão -->
+                <!-- Se o ID do hackathon é 5, vira: id="deleteModal5" -->
+                <!-- O aria-labelledby conecta o modal com seu título para leitores de tela (acessibilidade) -->
+                <div class="modal fade" id="deleteModal{{ $hackathon->hackathons_disponiveis_id }}" tabindex="-1"
+                     aria-labelledby="deleteModalLabel{{ $hackathon->hackathons_disponiveis_id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center w-100"
+                                    id="deleteModalLabel{{ $hackathon->hackathons_disponiveis_id }}">
+                                    Confirmar Exclusão</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                Tem certeza que deseja excluir o hackathon
+                                <strong>{{ $hackathon->hackathon_nome }}</strong> permanentemente?
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <form action="{{ route('hackathons-disponiveis.destroy', $hackathon->hackathons_disponiveis_id) }}"
+                                      method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Não</button>
+                                    <button type="submit" class="btn btn-danger">Sim</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </a>
-            </div>
-        @endforeach
-    </div>
-
-    <!-- Mensagem quando não há hackathons -->
-    @if($hackathons->isEmpty())
-        <div class="row">
-            <div class="col-12 text-center">
-                <div class="alert alert-info">
-                    <h4>Nenhum Hackathon disponível no momento</h4>
-                    <p>Adicione um novo Hackathon na opção "+ Adicionar Hackathon"</p>
                 </div>
             </div>
-        </div>
-    @endif
+        @empty
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <h4>Nenhum hackathon disponível para editar</h4>
+                    <p>Adicione hackathons na tela principal.</p>
+                </div>
+            </div>
+        @endforelse
+    </div>
 </div>
-    @endsection
+<!-- No elemento com classe .card -->
+<!-- Quando houver hover (mouse em cima) -->
+<!-- Elemento filho com classe .overlay-hover -->
+<style>
+.card:hover .overlay-hover {
+    opacity: 1 !important;
+}
+</style>
+@endsection

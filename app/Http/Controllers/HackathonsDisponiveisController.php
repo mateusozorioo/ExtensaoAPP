@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HackathonsDisponiveis;
+use App\Models\HackathonDisponivel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,16 +11,16 @@ class HackathonsDisponiveisController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function aluno()
     {
         // Buscar todos os hackathons disponíveis
-        //$hackathons = HackathonsDisponiveis::orderBy('created_at', 'desc')->get();
-        $hackathons = HackathonsDisponiveis::all();
+        //$hackathons = HackathonsDisponivel::orderBy('created_at', 'desc')->get();
+        $hackathons = HackathonDisponivel::all();
         
         // Debug: Verificar se está retornando dados
         // dd($hackathons); // Descomente esta linha para debug
         
-        return view('hackathons_disponiveis.index', compact('hackathons'));
+        return view('hackathons_disponiveis.aluno', compact('hackathons'));
     }
 
     /**
@@ -76,7 +76,7 @@ class HackathonsDisponiveisController extends Controller
 
         try {
             // Criar o novo hackathon no banco de dados
-            $hackathon = HackathonsDisponiveis::create([
+            $hackathon = HackathonDisponivel::create([
                 'hackathon_nome' => $validatedData['nome'],
                 'hackathon_link' => $validatedData['link'],
                 'hackathon_imagem' => $imagemPath,
@@ -103,17 +103,17 @@ class HackathonsDisponiveisController extends Controller
      */
     public function show($id)
     {
-        $hackathon = HackathonsDisponiveis::findOrFail($id);
+        $hackathon = HackathonDisponivel::findOrFail($id);
         return view('hackathons_disponiveis.show', compact('hackathon'));
     }
 
 /**
      * Tela de edição com todos os hackathons
      */
-    public function edicao()
+    public function index()
     {
-        $hackathons = HackathonsDisponiveis::all();
-        return view('hackathons_disponiveis.edicao', compact('hackathons'));
+        $hackathons = HackathonDisponivel::all();
+        return view('hackathons_disponiveis.index', compact('hackathons'));
     }
 
     /**
@@ -121,7 +121,7 @@ class HackathonsDisponiveisController extends Controller
      */
     public function edit($id)
     {
-        $hackathon = HackathonsDisponiveis::findOrFail($id);
+        $hackathon = HackathonDisponivel::findOrFail($id);
         return view('hackathons_disponiveis.edit', compact('hackathon'));
     }
 
@@ -130,7 +130,7 @@ class HackathonsDisponiveisController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $hackathon = HackathonsDisponiveis::findOrFail($id);
+        $hackathon = HackathonDisponivel::findOrFail($id);
         
         // Validação dos dados
         $validatedData = $request->validate([
@@ -177,7 +177,7 @@ class HackathonsDisponiveisController extends Controller
                 'hackathon_imagem' => $imagemPath,
             ]);
 
-            return redirect()->route('hackathons-disponiveis.edicao')
+            return redirect()->route('hackathons-disponiveis.index')
                             ->with('success', 'Hackathon "' . $hackathon->hackathon_nome . '" atualizado com sucesso!');
                             
         } catch (\Exception $e) {
@@ -193,7 +193,7 @@ class HackathonsDisponiveisController extends Controller
     public function destroy($id)
     {
         try {
-            $hackathon = HackathonsDisponiveis::findOrFail($id);
+            $hackathon = HackathonDisponivel::findOrFail($id);
             
             // Remove a imagem do servidor
             if ($hackathon->hackathon_imagem && file_exists(public_path($hackathon->hackathon_imagem))) {
@@ -204,7 +204,7 @@ class HackathonsDisponiveisController extends Controller
             $nomeHackathon = $hackathon->hackathon_nome;
             $hackathon->delete();
 
-            return redirect()->route('hackathons-disponiveis.edicao')
+            return redirect()->route('hackathons-disponiveis.index')
                             ->with('success', 'Hackathon "' . $nomeHackathon . '" excluído com sucesso!');
 
         } catch (\Exception $e) {
