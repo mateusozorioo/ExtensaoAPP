@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Solicitacao;
 use App\Models\Aluno;
 use App\Models\Materia;
-use App\Models\HackathonDisponivel; // ✅ CORRIGIDO: singular
+use App\Models\HackathonDisponivel;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB; // ← Linha para que Transações possam ser feitas (ex: linha 133)
 
 class SolicitacaoController extends Controller
 {
@@ -16,9 +17,8 @@ class SolicitacaoController extends Controller
      */
     public function index()
     {
-        // ✅ CORRIGIDO: usando o nome correto do model
-        $hackathons = HackathonDisponivel::all();
-        
+        // Busca hackathons disponíveis dos últimos 3 meses
+        $hackathons = HackathonDisponivel::where('created_at', '>=', now()->subMonths(3))->get();
         return view('alunos.solicitacao.index', compact('hackathons'));
     }
 
@@ -27,7 +27,6 @@ class SolicitacaoController extends Controller
      */
     public function store(Request $request)
     {
-        // ✅ CORRIGIDO: usando os nomes corretos dos campos
         $validated = $request->validate([
             'hackathons_disponiveis_id' => 'required|exists:hackathons_disponiveis,hackathons_disponiveis_id',
             'metodo_validacao' => 'required|in:Formulário,Imagem,Certificado',
@@ -49,28 +48,158 @@ class SolicitacaoController extends Controller
             // Upload do arquivo
             $nomeArquivo = time() . '_' . $request->file('arquivo_prova')->getClientOriginalName();
             $caminhoArquivo = $request->file('arquivo_prova')->storeAs(
-                'solicitacoes', 
+                'solicitacoes',
                 $nomeArquivo, 
                 'public'
             );
 
-            // ✅ CORRIGIDO: usando os nomes corretos dos campos
+            // ✅ DATA NO HORÁRIO DE BRASÍLIA
+            $dataBrasilia = now()->setTimezone('America/Sao_Paulo');
+
+            // ✅ CRIAÇÃO DA SOLICITAÇÃO COM STATUS TINYINT
             $solicitacao = new Solicitacao();
-            $solicitacao->hackathons_disponiveis_id = $validated['hackathons_disponiveis_id']; // ✅ CORRIGIDO
+            $solicitacao->hackathons_disponiveis_id = $validated['hackathons_disponiveis_id'];
+            $solicitacao->metodo_validacao = $validated['metodo_validacao'];
             $solicitacao->arquivo_prova = $caminhoArquivo;
             $solicitacao->aluno_id = $validated['aluno_id'];
-            $solicitacao->data_solicitacao = now();
-            $solicitacao->status_solicitacao = 'Pendente';
+            $solicitacao->data_solicitacao = $dataBrasilia;
+            $solicitacao->status_solicitacao = Solicitacao::STATUS_PENDENTE;
             
             $solicitacao->save();
 
-            return redirect()->route('aluno.solicitacao.index')
-                           ->with('success', 'Solicitação enviada com sucesso!');
+            // ✅ DEPOIS (volta para o formulário e mostra o modal):
+            return redirect()->route('alunos.solicitacao.index')
+                ->with('success', 'Solicitação enviada com sucesso! ID: #' . $solicitacao->solicitacao_id)
+                ->with('solicitacao_id', $solicitacao->solicitacao_id);
 
         } catch (\Exception $e) {
+            \Log::error('Erro ao criar solicitação: ' . $e->getMessage());
+            
             return redirect()->back()
-                           ->with('error', 'Erro ao enviar solicitação. Tente novamente.')
-                           ->withInput();
+                        ->with('error', 'Erro ao enviar solicitação. Tente novamente.')
+                        ->withInput();
+        }
+    }
+
+    /**
+     * Exibe a tela de confirmação após envio da solicitação
+     */
+    public function confirmacao($id)
+    {
+        try {
+            // Busca a solicitação com os relacionamentos necessários
+            $solicitacao = Solicitacao::with(['aluno', 'hackathonDisponivel'])
+                ->findOrFail($id);
+            
+            return view('alunos.solicitacao.confirmacao', compact('solicitacao'));
+            
+        } catch (\Exception $e) {
+            \Log::error('Erro ao buscar solicitação para confirmação: ' . $e->getMessage());
+            
+            return redirect()->route('alunos.home')
+                ->with('error', 'Solicitação não encontrada.');
+        }
+    }
+    /**
+     * Exibe todas as solicitações pendentes para o professor
+     */
+    public function indexProfessor()
+    {
+        $solicitacoes = Solicitacao::with(['aluno', 'hackathonDisponivel'])
+            ->where('status_solicitacao', Solicitacao::STATUS_PENDENTE)
+            ->orderBy('data_solicitacao', 'desc')
+            ->paginate(10);
+        
+        return view('solicitacoes.index', compact('solicitacoes'));
+    }
+
+    /**
+     * Aceita uma solicitação
+     */
+    public function aceitar($id)
+    {
+        try {
+            $solicitacao = Solicitacao::findOrFail($id);
+            
+            // Verifica se a solicitação está pendente
+            if ($solicitacao->status_solicitacao != Solicitacao::STATUS_PENDENTE) {
+                return redirect()->back()
+                            ->with('error', 'Esta solicitação já foi processada.');
+            }
+
+            // Busca o aluno relacionado à solicitação
+            $aluno = Aluno::findOrFail($solicitacao->aluno_id);
+            
+            // Inicia uma transação para garantir consistência dos dados
+            \DB::beginTransaction();
+            
+            try {
+                // Atualiza o status da solicitação para aceita
+                $solicitacao->status_solicitacao = Solicitacao::STATUS_ACEITA;
+                $solicitacao->save();
+                
+                // Adiciona +1 crédito ao aluno
+                $aluno->creditos_aluno = $aluno->creditos_aluno + 1;
+                $aluno->save();
+                
+                // Confirma a transação
+                \DB::commit();
+                
+                $nomeAluno = $aluno->nome ?? 'Aluno';
+                $creditosAtuais = $aluno->creditos_aluno;
+                
+                return redirect()->back()
+                            ->with('success', "Solicitação de {$nomeAluno} foi aceita com sucesso! ");
+                            
+            } catch (\Exception $e) {
+                // Desfaz a transação em caso de erro
+                \DB::rollback();
+                throw $e;
+            }
+            
+        } catch (\Exception $e) {
+            \Log::error('Erro ao aceitar solicitação: ' . $e->getMessage());
+            
+            return redirect()->back()
+                        ->with('error', 'Erro ao aceitar solicitação. Tente novamente.');
+        }
+    }
+
+    /**
+     * Recusa uma solicitação com observação
+     */
+    public function recusar(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'observacao' => 'required|string|max:1000'
+        ], [
+            'observacao.required' => 'Por favor, informe o motivo da recusa.',
+            'observacao.max' => 'O motivo não pode ter mais de 1000 caracteres.'
+        ]);
+        
+        try {
+            $solicitacao = Solicitacao::findOrFail($id);
+            
+            // Verifica se a solicitação está pendente
+            if ($solicitacao->status_solicitacao != Solicitacao::STATUS_PENDENTE) {
+                return redirect()->back()
+                            ->with('error', 'Esta solicitação já foi processada.');
+            }
+            
+            $solicitacao->status_solicitacao = Solicitacao::STATUS_RECUSADA;
+            $solicitacao->observacao = $validated['observacao'];
+            $solicitacao->save();
+            
+            $nomeAluno = $solicitacao->aluno->nome ?? 'Aluno';
+            
+            return redirect()->back()
+                        ->with('success', "Solicitação de {$nomeAluno} foi recusada.");
+                        
+        } catch (\Exception $e) {
+            \Log::error('Erro ao recusar solicitação: ' . $e->getMessage());
+            
+            return redirect()->back()
+                        ->with('error', 'Erro ao recusar solicitação. Tente novamente.');
         }
     }
 }

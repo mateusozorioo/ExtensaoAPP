@@ -37,7 +37,7 @@
                 <a href="{{ route('professor.home') }}"
                     class="nav-link {{ request()->routeIs('professor.home') ? 'text-white fw-bold' : 'text-light' }}">
                     MENU
-                </a>
+                </a>    
                 <a href="{{ route('materia.index') }}"
                     class="nav-link {{ request()->routeIs('materia.index') ? 'text-white fw-bold' : 'text-light' }}">
                     GERENCIAR MATÉRIAS

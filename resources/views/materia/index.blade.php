@@ -11,8 +11,16 @@ $name = "GERENCIAR MATÉRIAS";
 
 <div class="container mt-2 mb-4">
     <div class="justify-content-between align-items-center mb-4">
-        <div class="row justify-content-end">
-            <h2 class="col-8 h3 text-center">Lista de Matérias</h2>
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-2 d-flex justify-content-start align-items-center">
+                <div class="p-2">
+                    <!-- MUDANÇA: De POST para GET (link simples) -->
+                    <a href="{{ route('professor.home') }}" class="btn btn-outline-secondary btn-lg border-2 px-4 shadow"">
+                        <i class="bi bi-arrow-left me-2"></i><i class="fa-solid fa-house"></i>
+                    </a>
+                </div>
+            </div>
+            <h2 class="col-md-8 h3 text-center">Lista de Matérias</h2>
             <!-- Botão de adicionar nova matéria -->
             <a href="{{ route('materia.create') }}" class="col-2 btn btn-success">+ Nova Matéria</a>
         </div>

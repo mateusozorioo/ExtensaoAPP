@@ -69,4 +69,13 @@ class HackathonDisponivel extends Model
         }
         return null;
     }
+
+    /**
+     * Relacionamento com Solicitações
+     * Um hackathon pode ter várias solicitações
+     */
+    public function solicitacoes()
+    {
+        return $this->hasMany(Solicitacao::class, 'hackathons_disponiveis_id', 'hackathons_disponiveis_id');
+    }
 }

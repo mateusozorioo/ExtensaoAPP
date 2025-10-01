@@ -9,20 +9,8 @@ $hideMenuText = false;
 
 @section('content')
 <div class="container mt-2 mb-4">
-    <div class="row d-flex justify-content-center mb-2">
-        <div class="col-lg-3 mb-2">
-            <a href="{{ route('hackathons-disponiveis.create') }}" class="shadow btn btn-success w-100">
-                + Adicionar Hackathon
-            </a>
-        </div>
-    </div>
-        <div class="row d-flex justify-content-between align-items-center mb-2">
-        <div class="col-1 mb-2">
-            <!--Espaço em branco-->
-        </div>
-        <!-- Botão de adicionar hackathon -->
-        <h2 class="col-lg-8 h3 text-center">Escolha o Hackathon que você deseja Editar/Excluir</h2> 
-        <div class="col-lg-1 mb-2">
+    <div class="row d-flex justify-content-between align-items-center mb-2">
+        <div class="col-lg-2 mb-2">
             <a href="{{ route('hackathons-disponiveis.aluno') }}" 
             class="btn btn-info" 
             data-bs-toggle="tooltip" 
@@ -31,7 +19,24 @@ $hideMenuText = false;
                 👁️
             </a>
         </div>
+        <div class="col-lg-3 mb-2">
+            <a href="{{ route('hackathons-disponiveis.create') }}" class="shadow btn btn-success w-100">
+                + Adicionar Hackathon
+            </a>
+        </div>
+        <div class="col-lg-2 d-flex justify-content-end align-items-center">
+            <div class="p-2">
+                <!-- MUDANÇA: De POST para GET (link simples) -->
+                <a href="{{ route('professor.home') }}" class="btn btn-outline-secondary btn-lg border-2 px-4 shadow"">
+                    <i class="fa-solid fa-house"></i><i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
     </div>
+        <div class="row d-flex justify-content-center align-items-center mb-2">
+            <!-- Título do body -->
+            <h2 class="col-lg-8 h3 text-center">Escolha o Hackathon que você deseja Editar/Excluir</h2> 
+        </div>
 
     <!-- Mensagens de sucesso/erro -->
     @if(session('success'))
@@ -75,7 +80,7 @@ $hideMenuText = false;
                         </button>
                     </div>
                     
-                    <div class="card-body text-center bg-secondary">
+                    <div class="card-body text-center bg-secondary p-2">
                         <h5 class="card-title text-light mb-0">{{ strtoupper($hackathon->hackathon_nome) }}</h5>
                     </div>
                 </div>

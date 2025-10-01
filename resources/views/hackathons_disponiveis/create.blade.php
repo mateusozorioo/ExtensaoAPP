@@ -42,7 +42,7 @@
                                    maxlength="100" required>
                             <!-- Mensagem de erro para validação -->
                             <div class="invalid-feedback">
-                                <!-- Se há erro, mostra a mensagem personalizada do controller (no caso, nenhuma por enquanto) -->
+                                <!-- Se há erro, mostra a mensagem personalizada do controller -->
                                 @error('nome')
                                     {{ $message }}
                                 <!--Se não há erro, mostra mensagem padrão-->

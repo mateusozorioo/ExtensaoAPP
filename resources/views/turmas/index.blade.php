@@ -10,14 +10,14 @@ $name = "GERENCIAR ALUNOS";
 
 <div class="container mt-2 mb-4">
     <div class="justify-content-between align-items-center mb-4">
-        <div class="row justify-content-end">
-            <a href="{{ route('professor.home') }}" class="col-2 btn btn-secondary">
-                <i class="bi bi-arrow-left me-2"></i>Voltar ao Menu
-            </a>
+        <div class="row justify-content-end align-items-center">
+            <div class="col-2">
+                <!--Espaço em branco-->
+            </div>
             <h2 class="col-8 h3 text-center">Encontre os alunos inscritos em cada Matéria</h2>
-        <div class="col-2">
-            <!--Espaço em branco-->
-        </div>
+            <a href="{{ route('professor.home') }}" class="col-2 btn btn-secondary">
+                Voltar ao Menu <i class="bi bi-arrow-right ms-2"></i>
+            </a>
         </div>
     </div>
 
@@ -110,6 +110,7 @@ $name = "GERENCIAR ALUNOS";
                         <th class="">Matrícula</th>
                         <th class="">Email</th>
                         <th class="">Curso</th>
+                        <th class="">Status</th>
                     </tr>
                 </thead>
                 <tbody class="table-light">
@@ -120,6 +121,7 @@ $name = "GERENCIAR ALUNOS";
                         <td class="">{{ $aluno->matricula }}</td>
                         <td class="">{{ $aluno->email }}</td>
                         <td class="">{{ $aluno->curso }}</td>
+                        <td class="">{{ $aluno->getStatusTexto() }}</td>
                     </tr>
                     @empty
                     <!-- Mensagem quando não há alunos inscritos na matéria -->

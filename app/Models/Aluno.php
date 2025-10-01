@@ -26,13 +26,40 @@ class Aluno extends Model
         'matricula',
         'email',
         'curso',
-        'pontuacao_hackathon',
+        'creditos_aluno',
         'bimestre_cubo',
         'materia_id',
+        'materia_anulada' 
     ];
+
+    // ✅ CONSTANTES PARA status_solicitacao (TINYINT)
+    const STATUS_REALIZANDO = 0;
+    const STATUS_ANULADA = 1;
+
+    // ✅ MÉTODOS AUXILIARES PARA STATUS
+    public function getStatusTexto()
+    {
+        switch ($this->materia_anulada) {
+            case self::STATUS_REALIZANDO:
+                return 'Realizando✅';
+            case self::STATUS_ANULADA:
+                return 'Anulou❌';
+            default:
+                return 'Realizando';
+        }
+    }
+
 
     //Relacionamento com a tabela 'matéria'
     public function materia(){
-        return $this->belongTo(Materia::class,'materia_id'); //isso diz que a coluna 'materia_id' de aluno é a FK que aponta para a PK da tabela 'materia'
+        return $this->belongsTo(Materia::class,'materia_id', 'materia_id'); // Corrigido: belongsTo (não belongTo) e adicionada a chave local
+    }
+    /**
+     * Relacionamento com Solicitações
+     * Um aluno pode ter várias solicitações
+     */
+    public function solicitacoes()
+    {
+        return $this->hasMany(Solicitacao::class, 'aluno_id', 'aluno_id');
     }
 }

@@ -13,10 +13,16 @@ class Solicitacao extends Model
     // Chave primária
     protected $primaryKey = 'solicitacao_id';
 
+    // ✅ CONSTANTES PARA status_solicitacao (TINYINT)
+    const STATUS_PENDENTE = 0;
+    const STATUS_ACEITA = 1;
+    const STATUS_RECUSADA = 2;
+
     // Campos que podem ser preenchidos em massa
     protected $fillable = [
         'data_solicitacao',
         'arquivo_prova',
+        'metodo_validacao',
         'status_solicitacao',
         'observacao',
         'aluno_id',
@@ -32,6 +38,36 @@ class Solicitacao extends Model
         'updated_at'
     ];
 
+    // ✅ MÉTODOS AUXILIARES PARA STATUS
+    public function getStatusTexto()
+    {
+        switch ($this->status_solicitacao) {
+            case self::STATUS_PENDENTE:
+                return 'Pendente';
+            case self::STATUS_ACEITA:
+                return 'Aceita';
+            case self::STATUS_RECUSADA:
+                return 'Recusada';
+            default:
+                return 'Desconhecido';
+        }
+    }
+
+        public function isPendente()
+    {
+        return $this->status_solicitacao == self::STATUS_PENDENTE;
+    }
+
+    public function isAceita()
+    {
+        return $this->status_solicitacao == self::STATUS_ACEITA;
+    }
+
+    public function isRecusada()
+    {
+        return $this->status_solicitacao == self::STATUS_RECUSADA;
+    }
+    
     // Relacionamentos
 
     /**
@@ -86,5 +122,21 @@ class Solicitacao extends Model
     public function scopeWithHackathon($query)
     {
         return $query->with('hackathonDisponivel');
+    }
+
+    /**
+     * Retorna a data que o aluno fez a solicitação formatada de forma segura
+     */
+    public function getDataFormatada()
+    {
+        try {
+            if ($this->data_solicitacao instanceof \Carbon\Carbon) {
+                return $this->data_solicitacao->format('d/m/Y H:i');
+            } else {
+                return \Carbon\Carbon::parse($this->data_solicitacao)->format('d/m/Y H:i');
+            }
+        } catch (\Exception $e) {
+            return 'Data não disponível';
+        }
     }
 }

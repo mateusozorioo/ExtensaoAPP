@@ -1,34 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.appAluno')
 @section('title', 'Hackathons Unifil')
 @section('content')
 
 @php
 $name = "HACKATHONS UNIFIL";
-$hideMenuText = true;
 @endphp
 
 
 <div class="container mt-2 mb-4">
-    <div class="row d-flex justify-content-between align-items-center mb-2">
-        <div class="col-lg-1 mb-2">
-            <a href="{{ route('hackathons-disponiveis.index') }}" 
-            class="btn btn-info" 
-            data-bs-toggle="tooltip" 
-            data-bs-placement="top" 
-            data-bs-title="Voltar para a tela de Edição">
-                ✏️
-            </a>
+    <div class="row d-flex justify-content-between align-items-center">
+        <div class="col-lg-2">
+            <!--Espaço em branco-->
         </div>
         <!-- Botão de adicionar hackathon -->
         <h2 class="col-lg-8 h3 text-center">Lista de Hackathons Disponíveis</h2> 
-        <div class="col-1 mb-2">
-            <!--Espaço em branco-->
+        <div class="col-lg-2 d-flex justify-content-end align-items-center">
+            <div class=" text-center h-50">
+                <div class="p-2">
+                    <!-- MUDANÇA: De POST para GET (link simples) -->
+                    <a href="{{ route('alunos.home') }}" class="btn btn-outline-secondary btn-lg border-2 px-4 shadow">
+                        <i class="fa-solid fa-house"></i><i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row text-center mb-2 text-secondary">
         <p class="h6">Clique em algum dos Cards para ser direcionado ao Portal de Inscrição do Hackathon</p>
     </div>
-    
+
     <!-- Mensagens de sucesso/erro -->
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

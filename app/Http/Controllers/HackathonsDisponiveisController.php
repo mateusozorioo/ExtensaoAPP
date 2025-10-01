@@ -212,4 +212,17 @@ class HackathonsDisponiveisController extends Controller
                             ->with('error', 'Erro ao excluir hackathon: ' . $e->getMessage());
         }   
     }
+
+    public function indexAlunos()
+    {
+        // Buscar todos os hackathons disponíveis
+        //$hackathons = HackathonsDisponivel::orderBy('created_at', 'desc')->get();
+        $hackathons = HackathonDisponivel::all();
+        
+        // Debug: Verificar se está retornando dados
+        // dd($hackathons); // Descomente esta linha para debug
+        
+        //esse caminho não tem nada a ver com o nome que você dá nas 'routes'
+        return view('alunos.hackathons_disponiveis.index', compact('hackathons'));
+    }
 }   
