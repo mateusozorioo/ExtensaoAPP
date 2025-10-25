@@ -16,7 +16,7 @@ $name = "ANULAÇÃO DE MATÉRIA";
         <div class="row justify-content-center">
             <div class="col-md-2"></div>
             <h2 class="col-8 h4 text-center">Use seus Hackathons para anular a matéria de Projeto Interdisciplinar (PI) do bimestre</h2>
-            <div class="col-md-2 d-flex justify-content-start align-items-center">
+            <div class="col-md-2 d-flex justify-content-end align-items-center">
                 <div class="p-2">
                     <a href="{{ route('alunos.home') }}" class="btn btn-outline-secondary btn-lg border-2 px-4 shadow">
                         <i class="fa-solid fa-house"></i><i class="bi bi-arrow-right ms-2"></i>

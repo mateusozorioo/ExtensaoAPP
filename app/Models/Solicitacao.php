@@ -43,11 +43,11 @@ class Solicitacao extends Model
     {
         switch ($this->status_solicitacao) {
             case self::STATUS_PENDENTE:
-                return 'Pendente';
+                return '🟡 Pendente';
             case self::STATUS_ACEITA:
-                return 'Aceita';
+                return '✅ Aceita';
             case self::STATUS_RECUSADA:
-                return 'Recusada';
+                return '❌ Recusada';
             default:
                 return 'Desconhecido';
         }
@@ -87,25 +87,6 @@ class Solicitacao extends Model
     {
         return $this->belongsTo(Aluno::class, 'aluno_id', 'aluno_id');
     }
-
-    /**
-     * Relacionamento com Materia
-     * Uma solicitacao pertence a uma matéria
-     */
-    public function materia()
-    {
-        return $this->belongsTo(Materia::class, 'materia_id', 'materia_id');
-    }
-
-    /**
-     * Relacionamento com Professor
-     * Uma solicitacao pertence a um professor
-     */
-    public function professor()
-    {
-        return $this->belongsTo(Professor::class, 'professor_id', 'professor_id');
-    }
-
     // Scopes úteis
 
     /**

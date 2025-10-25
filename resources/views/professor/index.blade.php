@@ -25,7 +25,7 @@ $name = "MENU DO PROFESSOR";
                     <div class="card-body d-flex align-items-center py-5">
                         <div class="me-3">
                             <!-- Ícone aqui -->
-                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-trophy"></i> -->
                                 <img src="{{ asset('images/trophy.png') }}" width="40" class="img-fluid" alt="Icon-Trofeu">
@@ -69,7 +69,7 @@ $name = "MENU DO PROFESSOR";
                     <div class="card-body d-flex align-items-center py-5">
                         <div class="me-3">
                             <!-- Ícone aqui -->
-                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-people"></i> -->
                                  <img src="{{ asset('images/graduation.png') }}" width="40" class="img-fluid" alt="Icon-Graduation">

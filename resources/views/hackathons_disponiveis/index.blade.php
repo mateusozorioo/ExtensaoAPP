@@ -3,7 +3,7 @@
 @section('title', 'Edição Hackathons')
 
 @php
-$name = "EDIÇÃO HACKATHONS DISPONÍVEIS";
+$name = "GERENCIAR HACKATHONS DISPONÍVEIS";
 $hideMenuText = false;
 @endphp
 
@@ -58,7 +58,7 @@ $hideMenuText = false;
             <div class="col-md-6 mb-4">
                 <div class="card h-100 border-0 shadow position-relative" style="border-radius: 15px; overflow: hidden;">
                     <!-- Imagem com altura fixa (200px) e object-fit: cover para não distorcer -->
-                    <img src="{{ asset($hackathon->hackathon_imagem) }}" 
+                    <img src="{{ route('hackathons-disponiveis.imagem', $hackathon->hackathons_disponiveis_id) }}" 
                          class="card-img-top" 
                          alt="{{ $hackathon->hackathon_nome }}" 
                          style="height: 200px; object-fit: cover;">

@@ -36,7 +36,7 @@ $hideMenuText = true;
                     <!-- Imagem atual -->
                     <div class="text-center mb-4">
                         <h5>Imagem Atual:</h5>
-                        <img src="{{ asset($hackathon->hackathon_imagem) }}" 
+                        <img src="{{ route('hackathons-disponiveis.imagem', $hackathon->hackathons_disponiveis_id) }}" 
                              alt="{{ $hackathon->hackathon_nome }}"
                              class="img-thumbnail"
                              style="max-height: 200px; object-fit: cover;">

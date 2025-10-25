@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HackathonDisponivel;
+use App\Models\Solicitacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,24 +55,10 @@ class HackathonsDisponiveisController extends Controller
         ]);
 
         // Processar o upload da imagem
-        $imagemPath = null;
         if ($request->hasFile('imagem')) {
-            $imagem = $request->file('imagem');
-            
-            // Gera um nome único para a imagem
-            $imagemNome = time() . '_' . uniqid() . '.' . $imagem->getClientOriginalExtension();
-            
-            // Cria o diretório se não existir
-            $uploadPath = public_path('uploads/hackathons');
-            if (!file_exists($uploadPath)) {
-                mkdir($uploadPath, 0755, true);
-            }
-            
-            // Move a imagem para o diretório public/uploads/hackathons
-            $imagem->move($uploadPath, $imagemNome);
-            
-            // Salva apenas o caminho relativo no banco
-            $imagemPath = 'uploads/hackathons/' . $imagemNome;
+            $arquivo = $request->file('imagem');
+            $bytesImagem = $arquivo->get();
+            $tipoMime = $arquivo->getClientMimeType();
         }
 
         try {
@@ -79,7 +66,8 @@ class HackathonsDisponiveisController extends Controller
             $hackathon = HackathonDisponivel::create([
                 'hackathon_nome' => $validatedData['nome'],
                 'hackathon_link' => $validatedData['link'],
-                'hackathon_imagem' => $imagemPath,
+                'hackathon_imagem' => $bytesImagem,
+                'hackathon_mime_type' => $tipoMime,
             ]);
 
             // Redirecionar com mensagem de sucesso
@@ -87,15 +75,31 @@ class HackathonsDisponiveisController extends Controller
                             ->with('success', 'Hackathon "' . $hackathon->hackathon_nome . '" criado com sucesso!');
                             
         } catch (\Exception $e) {
-            // Se der erro, apagar a imagem que foi salva
-            if ($imagemPath && file_exists(public_path($imagemPath))) {
-                unlink(public_path($imagemPath));
-            }
-            
+
             return redirect()->back()
                             ->withInput()
                             ->with('error', 'Erro ao criar hackathon: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Servir a imagem do hackathon do banco de dados
+     */
+    public function servirImagem($id)
+    {
+        $hackathon = HackathonDisponivel::findOrFail($id);
+        
+        // Verificar se tem imagem
+        if (!$hackathon->hackathon_imagem) {
+            abort(404, 'Imagem não encontrada');
+        }
+        
+        $tipoMime = $hackathon->hackathon_mime_type ?? 'image/jpg';
+
+        // Retornar a imagem como resposta HTTP
+        return response($hackathon->hackathon_imagem)
+            ->header('Content-Type', $tipoMime)
+            ->header('Content-Disposition', 'inline');
     }
 
     /**
@@ -148,25 +152,11 @@ class HackathonsDisponiveisController extends Controller
             'imagem.max' => 'A imagem não pode ser maior que 2MB.',
         ]);
 
-        $imagemPath = $hackathon->hackathon_imagem;
-
         // Se uma nova imagem foi enviada
         if ($request->hasFile('imagem')) {
-            // Apagar a imagem antiga
-            if ($imagemPath && file_exists(public_path($imagemPath))) {
-                unlink(public_path($imagemPath));
-            }
-
             $imagem = $request->file('imagem');
-            $imagemNome = time() . '_' . uniqid() . '.' . $imagem->getClientOriginalExtension();
-            
-            $uploadPath = public_path('uploads/hackathons');
-            if (!file_exists($uploadPath)) {
-                mkdir($uploadPath, 0755, true);
-            }
-            
-            $imagem->move($uploadPath, $imagemNome);
-            $imagemPath = 'uploads/hackathons/' . $imagemNome;
+            $bytesImage = $imagem->get();
+            $tipoMime = $imagem->getClientMimeType();
         }
 
         try {
@@ -174,7 +164,8 @@ class HackathonsDisponiveisController extends Controller
             $hackathon->update([
                 'hackathon_nome' => $validatedData['nome'],
                 'hackathon_link' => $validatedData['link'],
-                'hackathon_imagem' => $imagemPath,
+                'hackathon_imagem' => $bytesImage ?? $hackathon->hackathon_imagem,
+                'hackathon_mime_type' => $tipoMime ?? $hackathon->hackathon_mime_type,
             ]);
 
             return redirect()->route('hackathons-disponiveis.index')
@@ -194,11 +185,6 @@ class HackathonsDisponiveisController extends Controller
     {
         try {
             $hackathon = HackathonDisponivel::findOrFail($id);
-            
-            // Remove a imagem do servidor
-            if ($hackathon->hackathon_imagem && file_exists(public_path($hackathon->hackathon_imagem))) {
-                unlink(public_path($hackathon->hackathon_imagem));
-            }
             
             // Remove do banco
             $nomeHackathon = $hackathon->hackathon_nome;

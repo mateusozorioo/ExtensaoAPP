@@ -173,7 +173,7 @@ $name = "FORMULÁRIO DE VALIDAÇÃO DE HACKATHONS";
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-success px-4" onclick="voltarParaHome()">
-                    <i class="fa-solid fa-check me-2"></i>Entendi
+                    <i class="fa-solid fa-check me-2"></i>Entendi (Voltar para o Menu)
                 </button>
             </div>
         </div>

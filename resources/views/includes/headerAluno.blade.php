@@ -24,8 +24,8 @@
                     </div>
                 </div>
                 <div class="col-4 col-md-1 mb-3 mb-md-0">
-                    <div class="card bg-primary">
-                        <div class="card-header d-flex bg-secondary align-content-center text-white h6 px-1 py-1">
+                    <div class="card bg-info">
+                        <div class="card-header text-center bg-secondary text-white h6 px-1 py-1">
                             CRÉDITOS
                         </div>
                         <div class="card-body text-center p-1">

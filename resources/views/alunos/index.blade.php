@@ -47,7 +47,7 @@ $name = "MENU DO ALUNO";
                     <div class="card-body d-flex align-items-center py-5">
                         <div class="me-3">
                             <!-- Ícone aqui -->
-                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center"
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-calendar"></i> -->
                                 <img src="{{ asset('images/materia.png') }}" width="40" class="img-fluid" alt="Icon-Materia">
@@ -91,7 +91,7 @@ $name = "MENU DO ALUNO";
                     <div class="card-body d-flex align-items-center py-5">
                         <div class="me-3">
                             <!-- Ícone aqui -->
-                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center"
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
                                 <!-- <i class="bi bi-check-circle"></i> -->
                                  <img src="{{ asset('images/solicitacao-de-cotacao.png') }}" width="40" class="img-fluid" alt="Icon-Solicitacao">
@@ -100,6 +100,28 @@ $name = "MENU DO ALUNO";
                         <div>
                             <h5 class="card-title text-warning">SOLICITAR VALIDAÇÃO DE HACKATHONS</h5>
                             <p class="card-text">Solicite a validação do Hackathon que você fez!</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        {{-- Card : Acompanhar Solicitações --}}
+        <div class="col">
+            <a href="{{ route ('alunos.acompanhar-solicitacoes.index') }}" class="text-decoration-none">
+                <div class="card bg-secondary text-white h-100 shadow-lg">
+                    <div class="card-body d-flex align-items-center py-5">
+                        <div class="me-3">
+                            <!-- Ícone aqui -->
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 60px; height: 60px;">
+                                <!-- <i class="bi bi-check-circle"></i> -->
+                                 <img src="{{ asset('images/acompanhar-solicitacoes.png') }}" width="40" class="img-fluid" alt="Icon-Solicitacao">
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="card-title text-warning">ACOMPANHAR SOLICITAÇÕES</h5>
+                            <p class="card-text">É aqui que você acompanha os status de todas as suas solicitações</p>
                         </div>
                     </div>
                 </div>

@@ -202,4 +202,16 @@ class SolicitacaoController extends Controller
                         ->with('error', 'Erro ao recusar solicitação. Tente novamente.');
         }
     }
+
+    public function acompanharSolicitacoes()
+    {
+        $alunoId = 1;
+
+        $solicitacoes = Solicitacao::with('aluno', 'hackathonDisponivel')
+        ->where('aluno_id', '=', $alunoId)
+        ->orderBy('data_solicitacao', 'desc')
+        ->get();
+
+        return view('alunos.acompanhar-solicitacoes.index', compact('solicitacoes'));
+    }
 }

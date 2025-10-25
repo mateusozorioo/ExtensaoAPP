@@ -28,6 +28,7 @@ class HackathonDisponivel extends Model
         'hackathon_nome',        // Nome do hackathon
         'hackathon_link',        // Link de inscrição
         'hackathon_imagem',      // Caminho da imagem
+        'hackathon_mime_type',   // Tipo MIME da imagem
     ];
 
     // 6) Campos que devem ser tratados como datas (opcional, mas boa prática)

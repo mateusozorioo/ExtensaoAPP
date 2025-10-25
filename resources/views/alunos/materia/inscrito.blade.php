@@ -35,7 +35,7 @@ $name = "CONSULTAR SUA MATÉRIA";
             <div class="card shadow my-3">
                 <div class="card-header text-white pb-0 bg-secondary">
                     <div class="row justify-content-center align-items-center">
-                        <h2 class="col-8 h5 text-center text-white">ALUNO INSCRITO</h2>
+                        <h2 class="col-8 h5 text-center text-white">INSCRITO!</h2>
                     </div>
                 </div>
                 <div class="card-body bg-warning">

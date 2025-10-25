@@ -50,7 +50,7 @@ $hideMenuText = true;
             <div class="col-md-6 mb-4">
                 <a href="{{ $hackathon->hackathon_link }}" target="_blank" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow bg-secondary" style="border-radius: 15px; overflow: hidden;">
-                        <img src="{{ asset($hackathon->hackathon_imagem) }}" 
+                        <img src="{{ Route('hackathons-disponiveis.imagem', $hackathon->hackathons_disponiveis_id) }}" 
                              class="card-img-top" 
                              alt="{{ $hackathon->hackathon_nome }}"
                              style="height: 200px; object-fit: cover;">

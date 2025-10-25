@@ -31,7 +31,10 @@ Route::get('/professor', function () {
     return view('professor.index');
 })->name('professor.home');
 
-// A 'Route::resource equivale a escrever todas as rotas de um CRUD manualmente (como eu escrevi acima):
+Route::get('/hackathon-imagem/{id}', [HackathonsDisponiveisController::class, 'servirImagem'])
+    ->name('hackathons-disponiveis.imagem');
+
+    // A 'Route::resource equivale a escrever todas as rotas de um CRUD manualmente (como eu escrevi acima):
 Route::resource('hackathons-disponiveis', HackathonsDisponiveisController::class);
 
 Route::get('/aluno', [HackathonsDisponiveisController::class, 'aluno'])->name('hackathons-disponiveis.aluno'); // Nova rota
@@ -75,7 +78,7 @@ Route::prefix('alunos')->name('alunos.')->group(function () {
     Route::get('/anular-materia', [AnulacaoController::class, 'index'])->name('anulacao.index');
     Route::post('/anular-materia/anular', [AnulacaoController::class, 'anular'])->name('anulacao.anular');
 
-
+    Route::get('/acompanhar-solicitacoes', [SolicitacaoController::class, 'acompanharSolicitacoes'])->name('acompanhar-solicitacoes.index');
 });
 
 Route::get('/alunos', function () {
