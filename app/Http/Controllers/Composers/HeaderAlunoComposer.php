@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Composers;
 
 use Illuminate\View\View;
 use App\Models\Aluno;
+use Illuminate\Support\Facades\Auth;
 
 class HeaderAlunoComposer
 {
@@ -15,23 +16,35 @@ class HeaderAlunoComposer
      */
     public function compose(View $view)
     {
-        // Por enquanto, buscando o aluno com ID = 1
-        // Futuramente você pode pegar do usuário logado
-        $aluno = Aluno::find(1);
+        $user = Auth::user();
         
+        // Verifica se o usuário está autenticado
+        if (!$user) {
+            $view->with([
+                'nomeAluno' => 'Visitante',
+                'creditosAluno' => 0,
+                'emailAluno' => '',
+                'cursoAluno' => ''
+            ]);
+            return;
+        }
+        
+        $aluno = $user->aluno;
+        
+        // Se encontrou o aluno, passa os dados
         if ($aluno) {
             $view->with([
                 'nomeAluno' => $aluno->nome,
                 'creditosAluno' => $aluno->creditos_aluno,
                 'emailAluno' => $aluno->email,
-                'cursoAluno' => $aluno->curso
+                'cursoAluno' => $aluno->curso ?? 'Não informado'
             ]);
         } else {
             // Valores padrão caso não encontre o aluno
             $view->with([
                 'nomeAluno' => 'Aluno não encontrado',
                 'creditosAluno' => 0,
-                'emailAluno' => '',
+                'emailAluno' => $user->email ?? '',
                 'cursoAluno' => ''
             ]);
         }

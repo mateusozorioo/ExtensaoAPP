@@ -6,13 +6,13 @@
     <div class="container">
         <div class="my-2">
             <div class="row d-flex align-items-center">
-                <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+                <div class="col-12 col-md-4 text-center mb-3 mb-md-0">
                     <img src="{{ asset('images/logoUnifil.png') }}" width="100" class="img-fluid" alt="Logo-Unifil">
                 </div>
-                <div class="col-12 col-md-6 text-center mb-6 mb-md-0">
-                    <h1 class="fw-bold" style="font-size: 70px;">Extensão APP</h1>
+                <div class="col-12 col-md-4 text-center mb-6 mb-md-0">
+                    <h1 class="fw-bold" style="font-size: 50px;">Extensão APP</h1>
                 </div>
-                <div class="col-8 col-md-2 mb-3 mb-md-0">
+                <div class="col-8 col-md-3 mb-3 mb-md-0">
                     <div class="d-flex py-2 align-items-center rounded-pill justify-content-between"
                         style="background-color: #FF9500;">
                         <i class="fa-regular fa-circle-user ps-3 text-white" style="font-size: 2rem;"></i>

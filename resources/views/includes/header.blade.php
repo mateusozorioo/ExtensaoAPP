@@ -17,7 +17,7 @@
                         style="background-color: #FF9500;">
                         <i class="fa-regular fa-circle-user ps-4 text-white" style="font-size: 2rem;"></i>
                         <div class="text-white text-center flex-grow-1 pe-4">
-                            <div class="fw-bold">Mario H. A. C. Adaniya</div>
+                            <div class="fw-bold">{{ $nomeProfessor ?? 'Nome não disponível' }}</div>
                             <small class="opacity-90">Professor</small>
                         </div>
                     </div>

@@ -9,6 +9,7 @@ use App\Models\Materia;
 use App\Models\HackathonDisponivel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB; // ← Linha para que Transações possam ser feitas (ex: linha 133)
+use Illuminate\Support\Facades\Auth;
 
 class SolicitacaoController extends Controller
 {
@@ -134,8 +135,17 @@ class SolicitacaoController extends Controller
             \DB::beginTransaction();
             
             try {
+                // Pega o professor autenticado
+                $user = Auth::user();
+                $professor = $user->professor;
+
+                if (!$professor) {
+                    return redirect()->back()->with('error', 'Professor não encontrado.');
+                }
+
                 // Atualiza o status da solicitação para aceita
                 $solicitacao->status_solicitacao = Solicitacao::STATUS_ACEITA;
+                $solicitacao->professor_id = $professor->professor_id;
                 $solicitacao->save();
                 
                 // Adiciona +1 crédito ao aluno
@@ -186,8 +196,17 @@ class SolicitacaoController extends Controller
                             ->with('error', 'Esta solicitação já foi processada.');
             }
             
+            // Pega o professor autenticado
+            $user = Auth::user();
+            $professor = $user->professor;
+
+            if (!$professor) {
+                return redirect()->back()->with('error', 'Professor não encontrado.');
+            }
+
             $solicitacao->status_solicitacao = Solicitacao::STATUS_RECUSADA;
             $solicitacao->observacao = $validated['observacao'];
+            $solicitacao->professor_id = $professor->professor_id;
             $solicitacao->save();
             
             $nomeAluno = $solicitacao->aluno->nome ?? 'Aluno';
@@ -205,10 +224,19 @@ class SolicitacaoController extends Controller
 
     public function acompanharSolicitacoes()
     {
-        $alunoId = 1;
+        // Pega o usuário autenticado
+        $user = Auth::user();
+        
+        // Busca o aluno vinculado a esse usuário
+        $aluno = $user->aluno;
+        
+        // Verifica se o aluno existe
+        if (!$aluno) {
+            return redirect()->back()->with('error', 'Aluno não encontrado.');
+        }
 
         $solicitacoes = Solicitacao::with('aluno', 'hackathonDisponivel')
-        ->where('aluno_id', '=', $alunoId)
+        ->where('aluno_id', $aluno->aluno_id)
         ->orderBy('data_solicitacao', 'desc')
         ->get();
 

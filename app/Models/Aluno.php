@@ -21,15 +21,12 @@ class Aluno extends Model
 
     // 5) Quais campos podem ser preenchidos automaticamente, em massa (mass assignment) - $fillable
     protected $fillable = [
-        'aluno_id',
+        'user_id',
         'nome',
-        'matricula',
         'email',
-        'curso',
         'creditos_aluno',
-        'bimestre_cubo',
         'materia_id',
-        'materia_anulada' 
+        'materia_anulada',
     ];
 
     // ✅ CONSTANTES PARA status_solicitacao (TINYINT)
@@ -61,5 +58,11 @@ class Aluno extends Model
     public function solicitacoes()
     {
         return $this->hasMany(Solicitacao::class, 'aluno_id', 'aluno_id');
+    }
+
+    // Relacionamento com User
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -21,6 +21,7 @@ class Professor extends Model
 
     // 5) Quais campos podem ser preenchidos automaticamente, em massa (mass assignment) - $fillable
     protected $fillable = [
+        'user_id',
         'nome',
         'email',
     ];

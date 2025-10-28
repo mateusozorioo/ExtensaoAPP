@@ -4,14 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Materia; // Importa o model Materia
+use Illuminate\Support\Facades\Auth;
 
 class MateriaController extends Controller
 {
     //Método que exibe a lista de matérias (READ)
     public function index()
     {
-        //Recupera todas as matérias do banco
-        $materias = Materia::orderBy('materia_id', 'asc')->get();
+        // Pega o professor autenticado
+        $user = Auth::user();
+        $professor = $user->professor;
+
+        if (!$professor) {
+            return redirect()->back()->with('error', 'Professor não encontrado.');
+        }
+
+        // Busca apenas as matérias deste professor
+        $materias = Materia::where('professor_id', $professor->professor_id)
+            ->orderBy('materia_id', 'asc')
+            ->get();
 
         //Retorna a view passando os dados ($materias) para que a view possa usá-los
         return view('materia.index', compact('materias')); //= ('materia.index', ['materias' => $materias])
@@ -36,10 +47,18 @@ class MateriaController extends Controller
         ]);
 
         // Criação do novo registro do banco usando o Eloquent (geração do SQL)
-        // (Criação da matéria com os dados vindos do formulário)
+        // Pega o professor autenticado
+        $user = Auth::user();
+        $professor = $user->professor;
+
+        if (!$professor) {
+            return redirect()->back()->with('error', 'Professor não encontrado.');
+        }
+
         Materia::create([
             'nome_materia' => $request->nome_materia,
             'bimestre_cubo' => $request->bimestre_cubo,
+            'professor_id' => $professor->professor_id, // ← ADICIONAR
         ]);
 
         // Redireciona com uma mensagem de sucesso
@@ -48,8 +67,18 @@ class MateriaController extends Controller
 
     public function edit($id)
     {
-        //Busca a matéria pelo id
-        $materia = Materia::findOrFail($id);
+        // Pega o professor autenticado
+        $user = Auth::user();
+        $professor = $user->professor;
+
+        if (!$professor) {
+            return redirect()->back()->with('error', 'Professor não encontrado.');
+        }
+
+        // Busca a matéria e verifica se pertence ao professor
+        $materia = Materia::where('materia_id', $id)
+            ->where('professor_id', $professor->professor_id)
+            ->firstOrFail();
 
         //Envia os dados para a view 'materia.edit'
         return view('materia.edit', compact('materia'));//= ('materia.edit', ['materias' => $materias])
@@ -64,8 +93,18 @@ class MateriaController extends Controller
             'bimestre_cubo' => 'required|string|max:2',
         ]);
 
-        //Encontra a matéria 
-        $materia = Materia::findOrFail($id);
+        // Pega o professor autenticado
+        $user = Auth::user();
+        $professor = $user->professor;
+
+        if (!$professor) {
+            return redirect()->back()->with('error', 'Professor não encontrado.');
+        }
+
+        // Busca a matéria e verifica se pertence ao professor
+        $materia = Materia::where('materia_id', $id)
+            ->where('professor_id', $professor->professor_id)
+            ->firstOrFail();
 
         //atualiza os dados e salva direto, sem ter que usar um save()
         $materia->update([
@@ -80,8 +119,18 @@ class MateriaController extends Controller
     //Remove a matéria no banco
     public function destroy($id)
     {
-        // Encontra a matéria pelo id
-        $materia = Materia::findorFail($id);
+        // Pega o professor autenticado
+        $user = Auth::user();
+        $professor = $user->professor;
+
+        if (!$professor) {
+            return redirect()->back()->with('error', 'Professor não encontrado.');
+        }
+
+        // Busca a matéria e verifica se pertence ao professor
+        $materia = Materia::where('materia_id', $id)
+            ->where('professor_id', $professor->professor_id)
+            ->firstOrFail();
 
         //Exclui a matéria
         $materia->delete();

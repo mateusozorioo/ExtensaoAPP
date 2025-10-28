@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Aluno;
 use App\Models\Materia;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AnulacaoController extends Controller
 {
@@ -14,9 +15,13 @@ class AnulacaoController extends Controller
      */
     public function index()
     {
-        // Para este exemplo, vou usar o aluno com ID 1
-        // Em um sistema real, você pegaria o ID do aluno autenticado
-        $aluno = Aluno::with('materia')->find(1);
+        $user = Auth::user();
+
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
+            return redirect()->back()->with('error', 'Aluno não encontrado.');
+        }
         
         if (!$aluno) {
             abort(404, 'Aluno não encontrado');
@@ -33,7 +38,13 @@ class AnulacaoController extends Controller
         try {
             // Para este exemplo, vou usar o aluno com ID 1
             // Em um sistema real, você pegaria o ID do aluno autenticado
-            $aluno = Aluno::find(1);
+            $user = Auth::user();
+
+            $aluno = $user->aluno;
+
+            if (!$aluno) {
+                return redirect()->back()->with('error', 'Aluno não encontrado.');
+            }
             
             if (!$aluno) {
                 return response()->json(['success' => false, 'message' => 'Aluno não encontrado'], 404);

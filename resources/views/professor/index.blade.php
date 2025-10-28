@@ -8,14 +8,6 @@
 $name = "MENU DO PROFESSOR";
 @endphp
 
-<div class="container">
-    <div class="row">
-        <a href="{{ route('alunos.home') }}" class="btn btn-info">
-            Acessar Menu dos Alunos
-        </a>
-    </div>
-</div>
-
 <div class="container mt-3 mb-4">
     <div class="row row-cols-1 row-cols-md-2 g-4">
         {{-- Card 1: Hackathons UNIFIL --}}

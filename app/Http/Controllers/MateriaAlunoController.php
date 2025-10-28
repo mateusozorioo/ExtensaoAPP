@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Materia;
 use App\Models\Aluno;
+use Illuminate\Support\Facades\Auth;
 
 class MateriaAlunoController extends Controller
 {
     // Exibe a tela de inscrição em matéria para o aluno
     public function index()
     {
-        // ID fixo do aluno (conforme solicitado) - Define um aluno específico para teste
-        $alunoId = 1;
+        $user = Auth::user();
         
-        // Busca o aluno no banco de dados pelo ID usando o model Eloquent
-        $aluno = Aluno::find($alunoId);
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
+            return redirect()->back()->with('error', 'Aluno não encontrado.');
+        }
         
         // Verifica se o aluno existe no banco de dados
         if (!$aluno) {
@@ -55,8 +58,13 @@ class MateriaAlunoController extends Controller
             'bimestre_cubo' => 'required|string',
         ]);
         
-        // ID fixo do aluno (mesmo usado no método index)
-        $alunoId = 1;
+        $user = Auth::user();
+        
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
+            return redirect()->back()->with('error', 'Aluno não encontrado.');
+        }
         
         // Busca a matéria específica que tem EXATAMENTE o nome E o bimestre selecionados
         // Isso garante que a combinação matéria+bimestre seja válida
@@ -73,8 +81,6 @@ class MateriaAlunoController extends Controller
         }
         
         // Se chegou até aqui, a combinação é válida
-        // Busca o aluno novamente para atualizar seus dados
-        $aluno = Aluno::find($alunoId);
         
         // Associa a matéria encontrada ao aluno (cria a inscrição)
         $aluno->materia_id = $materia->materia_id;
@@ -89,11 +95,13 @@ class MateriaAlunoController extends Controller
     // MÉTODO ATUALIZADO: Exibe a tela de edição/alteração de matéria
     public function edit()
     {
-        // ID fixo do aluno (conforme solicitado)
-        $alunoId = 1;
+        $user = Auth::user();
         
-        // Busca o aluno
-        $aluno = Aluno::find($alunoId);
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
+            return redirect()->back()->with('error', 'Aluno não encontrado.');
+        }
         
         if (!$aluno) {
             return redirect()->back()->with('error', 'Aluno não encontrado.');
@@ -136,11 +144,13 @@ class MateriaAlunoController extends Controller
             'bimestre_cubo' => 'required|string',
         ]);
         
-        // ID fixo do aluno (conforme solicitado)
-        $alunoId = 1;
-        
-        // Busca o aluno primeiro para verificar se a matéria foi anulada
-        $aluno = Aluno::find($alunoId);
+        $user = Auth::user();
+
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
+            return redirect()->back()->with('error', 'Aluno não encontrado.');
+        }
         
         // NOVA VERIFICAÇÃO: Verifica se a matéria foi anulada
         if ($aluno && $aluno->materia_anulada == 1) {
@@ -182,14 +192,11 @@ class MateriaAlunoController extends Controller
     // Método para remover o aluno da matéria (limpar materia_id)
     public function destroy()
     {
-        // ID fixo do aluno (conforme padrão do seu código)
-        $alunoId = 1;
-        
-        // Busca o aluno
-        $aluno = Aluno::find($alunoId);
-        
-        // Verifica se o aluno existe
-        if (!$aluno) {  
+        $user = Auth::user();
+
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
             return redirect()->back()->with('error', 'Aluno não encontrado.');
         }
         
