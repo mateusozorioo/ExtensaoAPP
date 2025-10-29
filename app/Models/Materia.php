@@ -23,6 +23,12 @@ class Materia extends Model
     protected $fillable = [
         'nome_materia',
         'bimestre_cubo',
+        'professor_id',
     ];
 
+    // Relacionamento com Professor
+    public function professor()
+    {
+        return $this->belongsTo(Professor::class, 'professor_id', 'professor_id');
+    }
 }

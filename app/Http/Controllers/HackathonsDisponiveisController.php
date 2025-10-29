@@ -16,7 +16,9 @@ class HackathonsDisponiveisController extends Controller
     {
         // Buscar todos os hackathons disponíveis
         //$hackathons = HackathonsDisponivel::orderBy('created_at', 'desc')->get();
-        $hackathons = HackathonDisponivel::all();
+        $hackathons = HackathonDisponivel::where('created_at', '>=', now()->subMonths(3))
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();
         
         // Debug: Verificar se está retornando dados
         // dd($hackathons); // Descomente esta linha para debug
@@ -116,7 +118,9 @@ class HackathonsDisponiveisController extends Controller
      */
     public function index()
     {
-        $hackathons = HackathonDisponivel::all();
+        $hackathons = HackathonDisponivel::where('created_at', '>=', now()->subMonths(3))
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();
         return view('hackathons_disponiveis.index', compact('hackathons'));
     }
 
@@ -203,7 +207,10 @@ class HackathonsDisponiveisController extends Controller
     {
         // Buscar todos os hackathons disponíveis
         //$hackathons = HackathonsDisponivel::orderBy('created_at', 'desc')->get();
-        $hackathons = HackathonDisponivel::all();
+        $hackathons = HackathonDisponivel::where('created_at', '>=', now()->subMonths(3))
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();
+
         
         // Debug: Verificar se está retornando dados
         // dd($hackathons); // Descomente esta linha para debug

@@ -28,11 +28,20 @@ class SolicitacaoController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
+            return redirect()->back()
+                ->with('error', 'Aluno não encontrado.')
+                ->withInput();
+        }
+
         $validated = $request->validate([
             'hackathons_disponiveis_id' => 'required|exists:hackathons_disponiveis,hackathons_disponiveis_id',
             'metodo_validacao' => 'required|in:Formulário,Imagem,Certificado',
             'arquivo_prova' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
-            'aluno_id' => 'required|exists:aluno,aluno_id'
+            //'aluno_id' => 'required|exists:aluno,aluno_id'
         ], [
             'hackathons_disponiveis_id.required' => 'Por favor, selecione um hackathon.',
             'hackathons_disponiveis_id.exists' => 'Hackathon selecionado não é válido.',
@@ -62,7 +71,7 @@ class SolicitacaoController extends Controller
             $solicitacao->hackathons_disponiveis_id = $validated['hackathons_disponiveis_id'];
             $solicitacao->metodo_validacao = $validated['metodo_validacao'];
             $solicitacao->arquivo_prova = $caminhoArquivo;
-            $solicitacao->aluno_id = $validated['aluno_id'];
+            $solicitacao->aluno_id = $aluno->aluno_id;
             $solicitacao->data_solicitacao = $dataBrasilia;
             $solicitacao->status_solicitacao = Solicitacao::STATUS_PENDENTE;
             
@@ -75,10 +84,12 @@ class SolicitacaoController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Erro ao criar solicitação: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
             
+            // ✅ TEMPORARIAMENTE, mostre o erro completo (REMOVA depois em produção)
             return redirect()->back()
-                        ->with('error', 'Erro ao enviar solicitação. Tente novamente.')
-                        ->withInput();
+                ->with('error', 'Erro ao enviar solicitação: ' . $e->getMessage())
+                ->withInput();
         }
     }
 

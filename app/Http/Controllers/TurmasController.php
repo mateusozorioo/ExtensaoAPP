@@ -2,54 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Aluno; //importa o Model Aluno
-use App\Models\Materia; //importa o Model Matéria
+use App\Models\Aluno;
+use App\Models\Materia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class TurmasController extends Controller // Mudança aqui
+class TurmasController extends Controller
 {
-    /**
-     * Método para exibir a página de consulta de alunos por matéria
-     * 
-     * @param Request $request
-     * @return \Illuminate\View\View
-     */
     public function index(Request $request)
     {
-        // Busca todas as matérias disponíveis para popular o select
-        $materias = Materia::orderBy('nome_materia', 'asc')->get();
+        $user = Auth::user();
+        $professor = $user->professor;
         
-        // Inicializa as variáveis
-        $alunos = collect(); // Collection vazia
+        if (!$professor) {
+            return redirect()->back()
+                ->with('error', 'Professor não encontrado.');
+        }
+        
+        $materias = Materia::where('professor_id', $professor->professor_id)
+                          ->orderBy('nome_materia', 'asc')
+                          ->get();
+        
+        $alunos = collect();
         $materiaSelecionada = null;
         
-        // Verifica se foi selecionada uma matéria
         if ($request->has('materia_id') && $request->materia_id != '') {
             
-            // Busca a matéria selecionada para exibir suas informações
-            $materiaSelecionada = Materia::find($request->materia_id);
+            $materiaSelecionada = Materia::where('materia_id', $request->materia_id)
+                                        ->where('professor_id', $professor->professor_id)
+                                        ->first();
             
-            // Verifica se a matéria existe
             if ($materiaSelecionada) {
-                // Busca todos os alunos que estão inscritos na matéria selecionada
-                // WHERE materia_id = $request->materia_id
                 $alunos = Aluno::where('materia_id', $request->materia_id)
-                              ->orderBy('nome', 'asc') // Ordena por nome do aluno
+                              ->orderBy('nome', 'asc')
                               ->get();
             } else {
-                // Se a matéria não existe, redireciona com mensagem de erro
                 return redirect()->route('turmas.index')
-                                ->with('error', 'Matéria não encontrada.');
+                                ->with('error', 'Matéria não encontrada ou você não tem permissão para acessá-la.');
             }
         }
         
-        // Retorna a view com os dados necessários
         return view('turmas.index', [
             'materias' => $materias,
             'alunos' => $alunos,
             'materiaSelecionada' => $materiaSelecionada
         ]);
     }
-    
-    // Outros métodos do controller (create, store, show, edit, update, destroy)...
 }
