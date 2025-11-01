@@ -23,7 +23,7 @@
         })->name('logout');
 
         Route::get('/', function () {
-            return view('index');
+            return view('auth.login');
         });
 
         //Rota para a criação de novas matérias

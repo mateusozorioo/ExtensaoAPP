@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\BimestreHelper;
+
 
 class Aluno extends Model
 {
@@ -32,6 +34,24 @@ class Aluno extends Model
     // ✅ CONSTANTES PARA status_solicitacao (TINYINT)
     const STATUS_REALIZANDO = 0;
     const STATUS_ANULADA = 1;
+
+    /**
+     * 🔄 MÉTODO AUTOMÁTICO: Reseta materia_anulada se for novo bimestre
+     * Este método é chamado automaticamente sempre que o aluno é carregado
+     */
+    protected static function booted()
+    {
+        static::retrieved(function ($aluno) {
+            // Verifica se é primeiro dia de bimestre
+            if (BimestreHelper::isPrimeiroDiaBimestre()) {
+                // Se o aluno tem materia_anulada = 1, reseta para 0
+                if ($aluno->materia_anulada == 1) {
+                    $aluno->materia_anulada = 0;
+                    $aluno->saveQuietly(); // Salva sem disparar eventos
+                }
+            }
+        });
+    }
 
     // ✅ MÉTODOS AUXILIARES PARA STATUS
     public function getStatusTexto()

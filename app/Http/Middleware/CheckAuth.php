@@ -17,7 +17,8 @@ class CheckAuth
         // Verifica se o usuário está autenticado
         if (!Auth::check()) {
             // Se não estiver logado, redireciona para a página de login
-            return redirect()->route('login')->with('error', 'Você precisa estar logado para acessar esta página.');
+            return redirect()->route('login');
+            //->with('error', 'Você precisa estar logado para acessar esta página.');
         }
 
         return $next($request);

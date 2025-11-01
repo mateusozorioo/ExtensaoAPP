@@ -29,10 +29,10 @@ $name = 'Acompanhar Solicitações';
         <div class="card border-1 border-black shadow mb-3" style="background-color: #808080ff">
             <div class="card-body">
                 <div class="row text-center text-white justify-items-between my-2">  
-                    <div class="col-md-4 col-6">
+                    <div class="col-md-3 col-6">
                         <b>Hackathon:</b><br>{{ $solicitacao->hackathonDisponivel->hackathon_nome }}
                     </div>
-                    <div class="col-md-3 col-6">
+                    <div class="col-md-2 col-6">
                         <b>Método de Validação:</b><br>
                         @if($solicitacao->metodo_validacao == 'Formulário')
                             📝 Formulário
@@ -49,6 +49,9 @@ $name = 'Acompanhar Solicitações';
                     </div>
                     <div class="col-md-2 col-6">
                         <b>Status:</b><br>{{ $solicitacao->getStatusTexto()}}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <b>Professor:</b><br>{{ $solicitacao->professor->nome }}
                     </div>
                 </div>
                 @if($solicitacao->observacao)

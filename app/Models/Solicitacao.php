@@ -87,6 +87,14 @@ class Solicitacao extends Model
     {
         return $this->belongsTo(Aluno::class, 'aluno_id', 'aluno_id');
     }
+    /**
+     * Relacionamento com Aluno
+     * Uma solicitacao foi respondida por um professor
+     */
+    public function professor()
+    {
+        return $this->belongsTo(Professor::class, 'professor_id', 'professor_id');
+    }
     // Scopes úteis
 
     /**
